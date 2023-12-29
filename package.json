@@ -1,7 +1,7 @@
 {
   "name": "medpromptjs",
   "version": "0.1.0",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Bell Eapen",
   "main": "dist/index.js",
   "module": "dist/medpromptjs.esm.js",
@@ -33,7 +33,6 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "peerDependencies": {},
   "engines": {
     "node": ">=12"
   },
@@ -46,5 +45,14 @@
       "path": "dist/medpromptjs.esm.js",
       "limit": "10 KB"
     }
-  ]
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^11.0.1",
+    "@tsconfig/recommended": "^1.0.3",
+    "dts-cli": "^2.0.3",
+    "husky": "^8.0.3",
+    "size-limit": "^11.0.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  }
 }

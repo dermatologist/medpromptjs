@@ -1,103 +1,56 @@
-# DTS User Guide
+# <img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPrompt
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with DTS. Let’s get you oriented with what’s here and how to use it.
+## *Prompts, tools, chains and agents* for healthcare using *LLMs & FHIR*.  ✍️
 
-> This DTS setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+# MEDPrompt (Javascript version) - WIP
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+## About
+**MEDPrompt** is a collection of prompts, tools, chains  and agents for medical applications using [LangChain](https://www.langchain.com/) and *space* using [Agency](https://github.com/operand/agency). **MEDPrompt also includes a collection of templates for using FHIR in LLM prompts (see below).** The aim of MEDPrompt is to provide a conceptual framework and a set of tools for building healthcare applications using LLMs. [Please read my Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html). User contributions are highly appreciated!
 
-## Commands
+## Terminology
+* **Prompts** are inputs or queries to LLMs that users can provide to elicit specific responses from a Large Language Model (LLM). Example: [*You are an AI assistant. Summarize this clinical document in 250 words*](src/medprompt/templates/summary_v1.jinja)
+* **Tools** are functions used by *agents* for getting things done. Example: [To find patient ID from name.](src/medprompt/tools/find_patient.py)
+* **Chains** are tools that use LLM calls to get things done. Example: [Answer a clinical question based on patient health record using RAG](src/medprompt/chains/rag_chain.py)
+* **Agents** use LLMs to orchestrate Chains and Tools to acheive the overarching goal. Example: [Answer a doctors question related to a patient. Find patient, get health record, generate embedding and generate answer](src/medprompt/agents/fhir_agent.py)
+* **Space** is an [Agency](https://github.com/operand/agency) based abstraction for an environment for agents to communicate according to the [actor model](https://en.wikipedia.org/wiki/Actor_model). Example: [FHIR space](examples/example_space_gradio.py)
 
-DTS scaffolds your new library inside `/src`.
+### Architecture
+[![Architecture](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)
 
-To run DTS, use:
+### Example
+[![Agent](https://github.com/dermatologist/medprompt/blob/develop/notes/agent.drawio.svg)](https://github.com/dermatologist/medprompt/blob/develop/notes/agent.drawio.svg)
 
-```bash
-npm start # or yarn start
-```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+### Design principles (WIP)
+* **Decoupled** - Each component is independent of the other with [dependencies injected](src/medprompt/bootstrap.py).
+* **LLM agnostic** - Each component can use any LLM. LLMs are [injected into chains and agents](src/medprompt/bootstrap.py).
+* **No Permanent vector storage** - No permanent storage of vectors. Vectors are generated on the fly.
+* **Fail silently** - Each component should fail silently and log errors.
+* **Returns** - Each component should return a LLM friendly message.
+* **Modular** - Each component is a separate module that can be used independently.
+* **Extensible** - New tools, chains and agents can be added easily.
+* **Reusable** - Tools, chains and agents can be reused in different contexts.
+* **Testable** - Each component can be tested independently.
+* **Documented** - Each component is documented with examples.
+* **Open** - Open source and open to contributions.
 
-To do a one-off build, use `npm run build` or `yarn build`.
+#### Disclaimer:
+*This repository is not associated with the [Medprompt method of prompting](https://arxiv.org/pdf/2311.16452.pdf). In this generic repository, [I](https://nuchange.ca) will be trying to implement the method using langchain abstractions. Get in touch to share your thoughts via [GitHub discussions](https://github.com/dermatologist/medprompt/discussions). Please submit a PR with a link to the official implementation if any.*
 
-To run tests, use `npm test` or `yarn test`.
+## Give us a star ⭐️
+If you find this project useful, give us a star. It helps others discover the project.
 
-## Configuration
+## Related projects
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+* [MEDprompt](https://github.com/dermatologist/medprompt)
+* [FHIRy - FHIR to pandas dataframe](https://github.com/dermatologist/fhiry)
+* [kedro-multimodal - Template for multi-modal machine learning in healthcare using Kedro](https://github.com/dermatologist/kedro-multimodal)
+* [ckblib - A library for clinical knowledge graphs](https://github.com/dermatologist/ckblib)
 
-### Jest
+## Contributing
+* PR welcome
 
-Jest tests are set up to run with `npm test` or `yarn test`.
 
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.ts        # EDIT THIS
-/test
-  index.test.ts   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
-```
-
-### Rollup
-
-DTS uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `dts` [optimizations docs](https://github.com/weiran-zsd/dts-cli#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
-```
-
-You can also choose to install and use [invariant](https://github.com/weiran-zsd/dts-cli#invariant) and [warning](https://github.com/weiran-zsd/dts-cli#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. DTS has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+## Contributers
+* [Bell Eapen](https://nuchange.ca) | [![Twitter Follow](https://img.shields.io/twitter/follow/beapen?style=social)](https://twitter.com/beapen)
+* [My Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html)
