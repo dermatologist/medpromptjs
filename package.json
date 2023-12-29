@@ -54,5 +54,8 @@
     "size-limit": "^11.0.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "langchain": "^0.0.213"
   }
 }
