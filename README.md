@@ -1,18 +1,12 @@
-# <img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPrompt
+# <img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPromptJS
 
 ## *Prompts, tools, chains and agents* for healthcare using *LLMs & FHIR*.  ✍️
 
-# MEDPrompt (Javascript version) - WIP
+# MEDPromptJS (Javascript version) - WIP
 
 ## About
-**MEDPrompt** is a collection of prompts, tools, chains  and agents for medical applications using [LangChain](https://www.langchain.com/) and *space* using [Agency](https://github.com/operand/agency). **MEDPrompt also includes a collection of templates for using FHIR in LLM prompts (see below).** The aim of MEDPrompt is to provide a conceptual framework and a set of tools for building healthcare applications using LLMs. [Please read my Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html). User contributions are highly appreciated!
+**MEDPromptJS** is a collection of prompts, tools, chains  and agents for medical applications using [LangChain](https://www.langchain.com/) and *space* using [Agency](https://github.com/operand/agency). **MEDPrompt also includes a collection of templates for using FHIR in LLM prompts (see below).** The aim of MEDPrompt is to provide a conceptual framework and a set of tools for building healthcare applications using LLMs. [Please read my Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html). User contributions are highly appreciated!
 
-## Terminology
-* **Prompts** are inputs or queries to LLMs that users can provide to elicit specific responses from a Large Language Model (LLM). Example: [*You are an AI assistant. Summarize this clinical document in 250 words*](src/medprompt/templates/summary_v1.jinja)
-* **Tools** are functions used by *agents* for getting things done. Example: [To find patient ID from name.](src/medprompt/tools/find_patient.py)
-* **Chains** are tools that use LLM calls to get things done. Example: [Answer a clinical question based on patient health record using RAG](src/medprompt/chains/rag_chain.py)
-* **Agents** use LLMs to orchestrate Chains and Tools to acheive the overarching goal. Example: [Answer a doctors question related to a patient. Find patient, get health record, generate embedding and generate answer](src/medprompt/agents/fhir_agent.py)
-* **Space** is an [Agency](https://github.com/operand/agency) based abstraction for an environment for agents to communicate according to the [actor model](https://en.wikipedia.org/wiki/Actor_model). Example: [FHIR space](examples/example_space_gradio.py)
 
 ### Architecture
 [![Architecture](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)
@@ -22,8 +16,8 @@
 
 
 ### Design principles (WIP)
-* **Decoupled** - Each component is independent of the other with [dependencies injected](src/medprompt/bootstrap.py).
-* **LLM agnostic** - Each component can use any LLM. LLMs are [injected into chains and agents](src/medprompt/bootstrap.py).
+* **Decoupled** - Each component is independent of the other with dependencies injected.
+* **LLM agnostic** - Each component can use any LLM. LLMs are injected into chains and agents.
 * **No Permanent vector storage** - No permanent storage of vectors. Vectors are generated on the fly.
 * **Fail silently** - Each component should fail silently and log errors.
 * **Returns** - Each component should return a LLM friendly message.
