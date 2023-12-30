@@ -4,6 +4,7 @@ import { z } from "zod";
 import { GetMedicalRecord } from "../utils/get_medical_record.ts";
 import { container } from "tsyringe";
 import { get } from "langchain/util/convex";
+import { FhirServer } from "../utils/fhir_server.ts";
 
 
 export const FhirPatientSearchTool = new DynamicStructuredTool({
@@ -26,6 +27,7 @@ export const FhirPatientSearchTool = new DynamicStructuredTool({
     patient_id: z.string(),
   }),
   func: async (args) => {
+    const fhir_server: FhirServer = container.resolve("FhirServer");
     const { given, family, birth_date, patient_id } = args;
     let query = "Patient?"
     if (patient_id) {
@@ -40,8 +42,10 @@ export const FhirPatientSearchTool = new DynamicStructuredTool({
     if (birth_date) {
       query += `&birthdate=${birth_date}`
     }
-    const get_medical_record = container.resolve(GetMedicalRecord);
-    const data = await get_medical_record.get(query);
+    const data = await fhir_server.call_fhir_server(
+      "",
+      query,
+    );
     return data;
   },
 });
