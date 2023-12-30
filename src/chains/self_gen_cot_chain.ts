@@ -1,7 +1,8 @@
+import "../bootstrap";
 import { SequentialChain, LLMChain } from "langchain/chains";
 import { container } from "tsyringe";
 import { PromptTemplate } from "langchain/prompts";
-import { LLM } from "langchain/dist/llms/base";
+import { LLM } from "langchain/llms/base";
 
 
 export class SelfGenCotChain {
