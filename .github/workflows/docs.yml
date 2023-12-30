@@ -12,9 +12,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v2.5.1
+      - uses: actions/setup-node@v4.0.1
         with:
-          node-version: 12
+          node-version: 19
       - run: npm run docs
       - name: Deploy Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.0
