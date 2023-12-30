@@ -23,18 +23,16 @@ describe('FhirPatientSearchTool', () => {
 
     it('should return a list of all matching patient names if multiple patients are found', async () => {
         const args = {
-            given: 'John',
-            family: 'Doe',
-            birth_date: '2000-01-01',
-            patient_id: '123',
+            patient_id: '592940',
         };
 
-        const result = await FhirPatientSearchTool.func(args);
-        expect(result).toEqual({
-            given: 'John',
-            family: 'Doe',
-            birth_date: '2000-01-01',
-            patient_id: '123',
-        });
+        const result: any = await FhirPatientSearchTool.func(args);
+        // expect(result).toEqual({
+        //     given: 'John',
+        //     family: 'Doe',
+        //     birth_date: '2000-01-01',
+        //     patient_id: '123',
+        // });
+        expect(result['entry'][0]['resource']['name'][0]['given'][0]).toBe('Amit Kumar')
     });
 });
