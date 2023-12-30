@@ -1,3 +1,4 @@
+import "../bootstrap.ts";
 import { autoInjectable, inject, injectable } from "tsyringe";
 import { FhirServer } from "./fhir_server.ts";
 import { Logger } from "tslog";
@@ -19,7 +20,7 @@ export class GetMedicalRecord {
         logger.info(`query: ${query}`)
         logger.info(`fhir_server: ${this.fhir_server.baseUrl}`)
         const response = await this.fhir_server.call_fhir_server(
-            "Patient",
+            "",
             query,
         );
         if (response.total != 0) {
