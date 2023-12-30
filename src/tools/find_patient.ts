@@ -6,13 +6,7 @@ export class FhirPatientSearchTool extends DynamicStructuredTool {
     super({
       name: 'FHIR Patient Search',
       description: 'Search for a patient by name and birthdate',
-      inputs: [
-        { name: 'name', type: 'string' },
-        { name: 'birthdate', type: 'date' },
-      ],
-      outputs: [
-        { name: 'patient', type: 'fhir/patient' },
-      ],
+
     });
   }
 

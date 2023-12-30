@@ -57,7 +57,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "brandi": "^5.0.0",
-    "langchain": "^0.0.213"
+    "langchain": "^0.0.213",
+    "tsyringe": "^4.8.0"
   }
 }
