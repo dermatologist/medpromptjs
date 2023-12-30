@@ -18,7 +18,8 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "docs": "typedoc --out docs src"
   },
   "husky": {
     "hooks": {
@@ -54,6 +55,7 @@
     "husky": "^8.0.3",
     "size-limit": "^11.0.1",
     "tslib": "^2.6.2",
+    "typedoc": "^0.25.4",
     "typescript": "^5.3.3"
   },
   "dependencies": {
