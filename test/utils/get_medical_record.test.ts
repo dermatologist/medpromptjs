@@ -1,7 +1,7 @@
 // FILEPATH: /home/beapen/repos/medpromptjs/test/utils/get_medical_record.test.ts
 
-import { GetMedicalRecord } from '../../src/utils/get_medical_record.ts';
-import { FhirServer } from '../../src/utils/fhir_server.ts'; // Assuming this is the correct import path
+import { GetMedicalRecord } from '../../src/utils/get_medical_record';
+import { FhirServer } from '../../src/utils/fhir_server'; // Assuming this is the correct import path
 import { mock, instance, when, verify, anything } from 'ts-mockito';
 import { container } from 'tsyringe';
 

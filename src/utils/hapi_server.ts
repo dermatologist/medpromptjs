@@ -1,4 +1,4 @@
-import { FhirServer } from "./fhir_server.ts";
+import { FhirServer } from "./fhir_server";
 import { Logger } from "tslog";
 
 const logger = new Logger({ name: "MedpromptLogger" });

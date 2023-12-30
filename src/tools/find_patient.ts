@@ -1,10 +1,10 @@
-import "../bootstrap.ts";
+import "../bootstrap";
 import { DynamicTool, DynamicStructuredTool } from "langchain/tools";
 import { z } from "zod";
-import { GetMedicalRecord } from "../utils/get_medical_record.ts";
+import { GetMedicalRecord } from "../utils/get_medical_record";
 import { container } from "tsyringe";
 import { get } from "langchain/util/convex";
-import { FhirServer } from "../utils/fhir_server.ts";
+import { FhirServer } from "../utils/fhir_server";
 
 
 export const FhirPatientSearchTool = new DynamicStructuredTool({
