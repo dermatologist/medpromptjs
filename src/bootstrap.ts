@@ -1,4 +1,7 @@
 import "reflect-metadata";
 import { HapiFhirServer } from "./utils/hapi_server.ts";
+import { container } from "tsyringe";
 
-export const fhir_server = new HapiFhirServer();
+container.register("FhirServer", {
+    useClass: HapiFhirServer,
+});

@@ -1,13 +1,15 @@
-import { injectable } from "tsyringe";
+import { autoInjectable, inject, injectable } from "tsyringe";
 import { FhirServer } from "./fhir_server.ts";
 import { Logger } from "tslog";
 
 const logger = new Logger({ name: "MedpromptLogger" });
-@injectable()
+
+@autoInjectable()
 export class GetMedicalRecord {
 
     constructor(
-        private readonly fhir_server: FhirServer,
+    @inject("FhirServer")
+    private fhir_server: FhirServer,
     ) {}
 
     async get(
@@ -15,6 +17,7 @@ export class GetMedicalRecord {
     ): Promise<any> {
         const query = this.format_query(patient_id)
         logger.info(`query: ${query}`)
+        logger.info(`fhir_server: ${this.fhir_server.baseUrl}`)
         const response = await this.fhir_server.call_fhir_server(
             "Patient",
             query,
