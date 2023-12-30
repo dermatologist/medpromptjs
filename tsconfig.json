@@ -3,6 +3,8 @@
   "include": ["src", "types"],
   "compilerOptions": {
         "target": "ES2022", // or higher
-        "module": "nodenext",
+        "module": "nodenext", //nodenext
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
   }
 }
