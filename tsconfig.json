@@ -6,5 +6,7 @@
         "module": "nodenext", //nodenext
         "allowImportingTsExtensions": true,
         "noEmit": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
   }
 }
