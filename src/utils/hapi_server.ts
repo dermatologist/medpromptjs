@@ -1,7 +1,7 @@
 import { FhirServer } from "./fhir_server.ts";
 
 
-class HapiServer extends FhirServer {
+export class HapiFhirServer extends FhirServer {
 
     baseUrl: string = 'http://hapi.fhir.org/baseR4/';
 

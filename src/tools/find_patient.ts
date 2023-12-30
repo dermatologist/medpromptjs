@@ -1,5 +1,9 @@
+import "../bootstrap.ts";
 import { DynamicTool, DynamicStructuredTool } from "langchain/tools";
 import { z } from "zod";
+import { GetMedicalRecord } from "../utils/get_medical_record.ts";
+import { container } from "tsyringe";
+import { get } from "langchain/util/convex";
 
 
 export const FhirPatientSearchTool = new DynamicStructuredTool({
@@ -23,10 +27,21 @@ export const FhirPatientSearchTool = new DynamicStructuredTool({
   }),
   func: async (args) => {
     const { given, family, birth_date, patient_id } = args;
-    const response = await fetch(
-      `http://localhost:3001/Patient?given=${given}&family=${family}`
-    );
-    const data = await response.json();
+    let query = "Patient?"
+    if (patient_id) {
+      query += `_id=${patient_id}`
+    }
+    if (given) {
+      query += `&given=${given}`
+    }
+    if (family) {
+      query += `&family=${family}`
+    }
+    if (birth_date) {
+      query += `&birthdate=${birth_date}`
+    }
+    const get_medical_record = container.resolve(GetMedicalRecord);
+    const data = await get_medical_record.get(query);
     return data;
   },
 });

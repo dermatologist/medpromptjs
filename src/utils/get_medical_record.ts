@@ -1,22 +1,29 @@
-import { autoInjectable } from "tsyringe";
+import { injectable } from "tsyringe";
 import { FhirServer } from "./fhir_server.ts";
+import { Logger } from "tslog";
 
-@autoInjectable()
-class GetMedicalRecord {
+const logger = new Logger({ name: "MedpromptLogger" });
+@injectable()
+export class GetMedicalRecord {
 
     constructor(
         private readonly fhir_server: FhirServer,
     ) {}
 
-    async get_medical_record(
+    async get(
         patient_id: string,
     ): Promise<any> {
         const query = this.format_query(patient_id)
+        logger.info(`query: ${query}`)
         const response = await this.fhir_server.call_fhir_server(
             "Patient",
             query,
         );
-        return response;
+        if (response.total === 0) {
+            return response;
+        } else {
+            return "No data found";
+        }
     }
 
     format_query(patient_id: string): string {
