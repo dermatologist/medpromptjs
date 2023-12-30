@@ -1,6 +1,6 @@
 # <img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPromptJS (JavaScript version of [<img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPrompt](https://github.com/dermatologist/medprompt)).
 
-## About
+## About | *Work in progress*
 
 ### *Prompts, tools, chains and agents* for healthcare using *LLMs & FHIR*.
 This Typescript port of [MEDPrompt](https://github.com/dermatologist/medprompt) does not include all the components of the python version such as the FHIR flattening templates. Please use the [Python version](https://github.com/dermatologist/medprompt) for the full functionality. The aim of MEDPrompt is to provide a conceptual framework and a set of tools for building healthcare applications using LLMs. [Please read my Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html). User contributions are highly appreciated!
@@ -8,7 +8,7 @@ This Typescript port of [MEDPrompt](https://github.com/dermatologist/medprompt) 
 ### Architecture
 [![Architecture](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)
 
-### Design principles (WIP)
+### Design principles
 * **Decoupled** - Each component is independent of the other with dependencies injected.
 * **LLM agnostic** - Each component can use any LLM. LLMs are injected into chains and agents.
 * **No Permanent vector storage** - No permanent storage of vectors. Vectors are generated on the fly.
