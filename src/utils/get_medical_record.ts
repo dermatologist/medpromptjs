@@ -22,7 +22,7 @@ export class GetMedicalRecord {
             "Patient",
             query,
         );
-        if (response.total === 0) {
+        if (response.total != 0) {
             return response;
         } else {
             return "No data found";
