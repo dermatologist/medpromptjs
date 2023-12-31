@@ -13,20 +13,15 @@ export class ExplainAgent  {
 
     tools: any[];
 
-    constructor() {
-        this.tools = [new SelfGenCotChain()];
-
+    constructor(tools: any[] = [new SelfGenCotChain()]) {
+        this.tools = tools;
     }
 
 
     async run(input: any){
-        const cot: any = new SelfGenCotChain();
-        // cot.lc_namespace = ["hwchase17"];
-        // cot.returnDirect = true;
-        // cot.description = "Generate a chain of thought explanation for the answer.";
         const promptWithChat = await pull<PromptTemplate>("hwchase17/react-chat");
-        const llm: LLM = container.resolve("GoogleVertexAI");
-        const tools: ToolInterface[] = [cot];
+        const llm: LLM = container.resolve("main-llm");
+        const tools: ToolInterface[] = this.tools;
         const agentWithChat = await createReactAgent({
             llm,
             tools,

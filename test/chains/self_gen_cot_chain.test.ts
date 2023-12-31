@@ -11,7 +11,7 @@ describe('SelfGenCotChain', () => {
     let mockPromptTemplate: PromptTemplate;
 
     beforeEach(() => {
-        mockLLM = container.resolve("GoogleVertexAI");
+        mockLLM = container.resolve("main-llm");
         mockPromptTemplate = new PromptTemplate({
             template: '',
             inputVariables: ["question", "answer"],

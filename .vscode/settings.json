@@ -1,9 +1,7 @@
 {
-    "licenser.license": "MIT",
+    "licenser.license": "AL2",
     "licenser.author": "Bell Eapen",
-    "licenser.projectName": "FHIRFormJS",
-    "debug.node.autoAttach": "on",
-    "npm-intellisense.showBuildInLibs": true,
+    "licenser.projectName": "MEDPromptJS",
     "files.watcherExclude": {
         "**/.git/objects/**": true,
         "**/.git/subtree-cache/**": true,
@@ -15,5 +13,5 @@
     "cSpell.words": [
         "fhir"
     ]
-      
+
 }

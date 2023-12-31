@@ -6,12 +6,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "TSDX Jest Tests",
+            "name": "dts-cli Tests",
             "type": "node",
             "request": "launch",
             "runtimeArgs": [
                 "--inspect-brk",
-                "${workspaceRoot}/node_modules/tsdx/dist/index.js",
+                "${workspaceRoot}/node_modules/dts-cli/dist/index.js",
                 "test",
                 "--runInBand"
             ],
