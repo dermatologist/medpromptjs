@@ -8,18 +8,6 @@ import { CallbackManagerForChainRun } from "langchain/dist/callbacks";
 
 
 export class SelfGenCotChain {
-    _call(values: ChainValues, runManager?: CallbackManagerForChainRun | undefined): Promise<ChainValues> {
-        throw new Error("Method not implemented.");
-    }
-    _chainType(): string {
-        throw new Error("Method not implemented.");
-    }
-    get inputKeys(): string[] {
-        throw new Error("Method not implemented.");
-    }
-    get outputKeys(): string[] {
-        throw new Error("Method not implemented.");
-    }
 
     private llm: LLM = container.resolve("main-llm");
     name: string = "self generated explanation";
@@ -63,6 +51,19 @@ export class SelfGenCotChain {
     async call(args: { question: string, answer: string }) {
         const chainExecutionResult = await this.chain.call(args);
         return chainExecutionResult;
+    }
+
+    _call(values: ChainValues, runManager?: CallbackManagerForChainRun | undefined): Promise<ChainValues> {
+        throw new Error("Method not implemented.");
+    }
+    _chainType(): string {
+        return "self_gen_cot_chain";
+    }
+    get inputKeys(): string[] {
+        return ["question", "answer"];
+    }
+    get outputKeys(): string[] {
+        return ["explanation"];
     }
 
     public getName() {
