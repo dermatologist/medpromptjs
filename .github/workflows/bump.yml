@@ -1,0 +1,37 @@
+name: "Bump Version"
+# include major/minor/patch in commit message
+
+on:
+  push:
+    branches:
+      - "release/**"
+
+jobs:
+  bump-version:
+    name: "Bump Version on release branch"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: "Checkout source code"
+        uses: "actions/checkout@v4"
+        with:
+          ref: ${{ github.ref }}
+      - name: Generate changelog
+        uses: charmixer/auto-changelog-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max-issues: 25
+      - name: "cat package.json"
+        run: cat ./package.json
+      - name: "Setup Node.js"
+        uses: "actions/setup-node@v4.0.1"
+        with:
+          node-version: 12
+      - name: "Automated Version Bump"
+        uses: "dermatologist/gh-action-bump-version@beapen-1"
+        with:
+          tag-prefix: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "cat package.json"
+        run: cat ./package.json

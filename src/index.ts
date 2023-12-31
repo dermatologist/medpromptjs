@@ -1,6 +1,5 @@
-export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('dev only output');
-  }
-  return a + b;
-};
+import "./bootstrap";
+
+export { SelfGenCotChain } from "./chains/self_gen_cot_chain";
+export { ExplainAgent } from './agents/explain_agent';
+

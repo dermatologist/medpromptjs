@@ -1,11 +1,12 @@
 {
   "name": "medpromptjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "Apache-2.0",
   "author": "Bell Eapen",
   "main": "dist/index.js",
   "module": "dist/medpromptjs.esm.js",
   "typings": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist",
     "src"
@@ -17,7 +18,8 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "docs": "typedoc --out docs src"
   },
   "husky": {
     "hooks": {
@@ -49,10 +51,26 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^11.0.1",
     "@tsconfig/recommended": "^1.0.3",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/supertest": "^6.0.2",
     "dts-cli": "^2.0.3",
+    "google-auth-library": "^8.9.0",
     "husky": "^8.0.3",
     "size-limit": "^11.0.1",
+    "supertest": "^6.3.3",
+    "ts-mockito": "^2.6.1",
     "tslib": "^2.6.2",
+    "typedoc": "^0.25.4",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "langchain": "^0.0.213",
+    "reflect-metadata": "^0.2.1",
+    "tslog": "^4.9.2",
+    "tsyringe": "^4.8.0"
   }
 }

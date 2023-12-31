@@ -1,0 +1,17 @@
+{
+    "licenser.license": "AL2",
+    "licenser.author": "Bell Eapen",
+    "licenser.projectName": "MEDPromptJS",
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/dist/**": true,
+        "**/examples/**": true,
+        "**notes/**": true
+    },
+    "cSpell.words": [
+        "fhir"
+    ]
+
+}
