@@ -1,9 +1,23 @@
 # <img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPromptJS (JavaScript version of [<img src="https://github.com/dermatologist/medprompt/blob/develop/images/medprompt_m_small.png" width="32" height="32">EDPrompt](https://github.com/dermatologist/medprompt)).
 
+[![npm version](https://badge.fury.io/js/medpromptjs.svg)](https://www.npmjs.com/package/medpromptjs)
+[![npm](https://img.shields.io/npm/dt/medpromptjs)](https://www.npmjs.com/package/medpromptjs)
+[![Build](https://github.com/dermatologist/medpromptjs/workflows/CI/badge.svg)](https://nuchange.ca)
+[![Known Vulnerabilities](https://snyk.io/test/github/dermatologist/medpromptjs/badge.svg)](https://www.npmjs.com/package/medpromptjs)
+[![Documentation](https://badgen.net/badge/icon/documentation?icon=libraries&label)](https://dermatologist.github.io/medpromptjs/)
+
 ## About | *Work in progress*
 
 ### *Prompts, tools, chains and agents* for healthcare using *LLMs & FHIR*.
 This Typescript port of [MEDPrompt](https://github.com/dermatologist/medprompt) does not include all the components of the python version such as the FHIR flattening templates. Please use the [Python version](https://github.com/dermatologist/medprompt) for the full functionality. The aim of MEDPrompt is to provide a conceptual framework and a set of tools for building healthcare applications using LLMs. [Please read my Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html). User contributions are highly appreciated!
+
+## Installation
+```
+npm i --save medpromptjs
+```
+
+## Usage
+* [see example](examples/sample_app.js)
 
 ### Architecture
 [![Architecture](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)](https://github.com/dermatologist/medprompt/blob/develop/notes/arch.drawio.svg)
