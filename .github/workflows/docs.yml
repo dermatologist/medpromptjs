@@ -1,21 +1,46 @@
-name: Generate and puplish gh-pages
-# https://docs.github.com/en/actions/guides/building-and-testing-python
-# https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
-on:
-  release:
-    types: [published]
+name: CI
 
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4.0.1
+      - name: Begin CI...
+        uses: actions/checkout@v4
+
+      - name: Use Node 19
+        uses: actions/setup-node@v4.0.1
         with:
-          node-version: 19
-      - run: npm run docs
+          node-version: 19.x
+
+      - name: Use cached node_modules
+        uses: actions/cache@v3.3.2
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/package-lock.lock') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install dependencies
+        run: npm install --only=dev
+        env:
+          CI: true
+
+      - name: Docs
+        run: npm run docs
+        env:
+          CI: true
+
       - name: Deploy Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
