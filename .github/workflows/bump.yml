@@ -20,6 +20,7 @@ jobs:
         uses: charmixer/auto-changelog-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          max-issues: 25
       - name: "cat package.json"
         run: cat ./package.json
       - name: "Setup Node.js"
