@@ -9,7 +9,7 @@ import { AgentExecutor, createReactAgent } from "langchain/agents";
 import { Tool } from "langchain/tools";
 import type { ToolInterface } from "@langchain/core/tools";
 
-class ExplainAgent  {
+export class ExplainAgent  {
 
     tools: any[];
 
