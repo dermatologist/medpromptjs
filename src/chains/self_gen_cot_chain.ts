@@ -11,7 +11,7 @@ export class SelfGenCotChain {
 
     }
 
-    llm: LLM = container.resolve("GoogleVertexAI");
+    llm: LLM = container.resolve("main-llm");
     name: string = "self generated explanation";
     template: string = `
         ## Question: {question}

@@ -8,7 +8,7 @@ const google_vertex_ai = new GoogleVertexAI({
     temperature: 0.2,
 });
 
-container.register("GoogleVertexAI", {
+container.register("main-llm", {
     useValue: google_vertex_ai,
 });
 

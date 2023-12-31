@@ -25,7 +25,7 @@ export class ExplainAgent  {
         // cot.returnDirect = true;
         // cot.description = "Generate a chain of thought explanation for the answer.";
         const promptWithChat = await pull<PromptTemplate>("hwchase17/react-chat");
-        const llm: LLM = container.resolve("GoogleVertexAI");
+        const llm: LLM = container.resolve("main-llm");
         const tools: ToolInterface[] = [cot];
         const agentWithChat = await createReactAgent({
             llm,
