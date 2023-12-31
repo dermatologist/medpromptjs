@@ -13,12 +13,8 @@ export class ExplainAgent  {
 
     tools: any[];
 
-    constructor(tools: any[] = []) {
-        if (tools.length > 0) {
-            this.tools = tools;
-        }
-        else
-            this.tools = [new SelfGenCotChain()];
+    constructor(tools: any[] = [new SelfGenCotChain()]) {
+        this.tools = tools;
     }
 
 
