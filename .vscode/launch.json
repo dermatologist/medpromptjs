@@ -6,7 +6,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "TSDX Jest Tests",
+            "name": "dts-cli Tests",
             "type": "node",
             "request": "launch",
             "runtimeArgs": [
