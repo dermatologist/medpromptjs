@@ -33,9 +33,15 @@ export class SelfGenCotChain {
         outputKey: "explanation",
     });
 
-    async call(args: { question: string, answer: string }) {
-        const chainExecutionResult = await this.chain.call(args);
-        return chainExecutionResult;
+    async call(args: { question: string, answer: string }): Promise<string> {
+        // Use the `call` method of the `chain` object, which should return a Promise
+        const result = await this.chain.call(args);
+
+        // Convert the result to a string if necessary
+        const resultString = JSON.stringify(result);
+
+        // Return the result
+        return resultString;
     }
 
 }
