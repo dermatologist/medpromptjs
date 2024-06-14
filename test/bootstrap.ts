@@ -22,7 +22,7 @@ const bootstrap = async () => {
     const prompt = await pull<PromptTemplate>("hwchase17/react");
 
     container.register("main-llm", {
-        useValue: ollama,
+        useValue: google_vertex_ai,
     });
     container.register("tools", {
         useValue: [],
