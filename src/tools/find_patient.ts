@@ -1,4 +1,4 @@
-import "../bootstrap";
+import "../../test/bootstrap";
 import { DynamicTool, DynamicStructuredTool } from "langchain/tools";
 import { z } from "zod";
 import { GetMedicalRecord } from "../utils/get_medical_record";

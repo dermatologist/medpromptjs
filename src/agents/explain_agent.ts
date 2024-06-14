@@ -1,4 +1,4 @@
-import "../bootstrap";
+import "../../test/bootstrap";
 import { SelfGenCotChain } from "../chains/self_gen_cot_chain";
 import { pull } from "langchain/hub";
 import type { PromptTemplate } from "@langchain/core/prompts";

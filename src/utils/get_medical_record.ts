@@ -1,4 +1,4 @@
-import "../bootstrap";
+import "../../test/bootstrap";
 import { autoInjectable, inject, injectable } from "tsyringe";
 import { FhirServer } from "./fhir_server";
 import { Logger } from "tslog";

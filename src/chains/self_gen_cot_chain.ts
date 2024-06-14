@@ -1,4 +1,4 @@
-import "../bootstrap";
+import "../../test/bootstrap";
 import { SequentialChain, LLMChain, BaseChain } from "langchain/chains";
 import { container } from "tsyringe";
 import { PromptTemplate } from "langchain/prompts";

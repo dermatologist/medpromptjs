@@ -1,4 +1,4 @@
-import "../bootstrap";
+import "../../test/bootstrap";
 import { SelfGenCotChain } from "../chains/self_gen_cot_chain";
 import { ExplainAgent } from '../../src/agents/explain_agent';
 import * as dotenv from "dotenv";
