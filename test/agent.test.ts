@@ -30,8 +30,7 @@ describe('BaseAgent', () => {
             chat_history: [],
           }
             const result = await baseAgent.run(_input);
-            // console.log(JSON.stringify(result));
-            // expect(result).toEqual(expect.any(String));
+            console.log(result["output"]);
         }, 90 * SECONDS);
     });
 

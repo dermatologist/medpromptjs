@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { container } from "tsyringe";
 import { GoogleVertexAI } from "langchain/llms/googlevertexai";
 import {Ollama } from "@langchain/community/llms/ollama";
-import { PromptTemplate } from "langchain/prompts";
+import { ChatPromptTemplate} from "langchain/prompts";
 import { pull } from "langchain/hub";
 
 
@@ -10,7 +10,7 @@ import { pull } from "langchain/hub";
 
 const bootstrap = async () => {
     const google_vertex_ai = new GoogleVertexAI({
-        model: "text-bison@001",
+        model: "text-bison",
         temperature: 0.2,
     });
 
@@ -19,6 +19,9 @@ const bootstrap = async () => {
         model: "phi3"
     });
 
+    const prompt = await pull<ChatPromptTemplate>(
+        "hwchase17/structured-chat-agent"
+    );
 
     container.register("main-llm", {
         useValue: google_vertex_ai,
@@ -27,7 +30,7 @@ const bootstrap = async () => {
         useValue: [],
     });
     container.register("prompt", {
-        useValue: "",
+        useValue: prompt,
     });
 
 

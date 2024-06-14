@@ -1,6 +1,6 @@
-import { PromptTemplate } from "@langchain/core/prompts";
+import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
 import { LLM } from "langchain/llms/base";
-import { AgentExecutor, createReactAgent } from "langchain/agents";
+import { AgentExecutor, createReactAgent, createStructuredChatAgent } from "langchain/agents";
 import type { ToolInterface } from "@langchain/core/tools";
 import mydi from "./mydi";
 
@@ -14,29 +14,7 @@ export class BaseAgent {
 
     default_prompt = PromptTemplate.fromTemplate(
         `
-        {chat_history}
-        If you have a choice between a tool and final answer, always choose the final answer.
-        Answer the following questions as best you can. You have access to the following tools:
-
-        {tools}
-
-        Use the following format:
-
-            Question: the input question you must answer
-            Thought: you should always think about what to do
-            Action: the action to take, should be one of [{tool_names}]
-            Action Input: the input to the action
-            Observation: the result of the action
-            ... (this Thought/Action/Action Input/Observation can repeat N times)
-            Thought: I now know the final answer
-            Final Answer: the final answer to the original input question
-
-        If you have a final answer, skip actions and output the final answer.
-        Begin!
-
-        Question: {input}
-
-        Thought:{agent_scratchpad}`
+    `
     );
 
     constructor(container: any) {
@@ -64,7 +42,7 @@ export class BaseAgent {
     }
 
     async run(input: any) {
-        const agent = await createReactAgent({
+        const agent = await createStructuredChatAgent({
             llm: this.llm,
             tools: this.tools,
             prompt: this.prompt,
