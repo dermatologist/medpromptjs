@@ -1,28 +1,27 @@
+
 import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
 import { LLM } from "langchain/llms/base";
-import { AgentExecutor, createReactAgent, createStructuredChatAgent } from "langchain/agents";
 import type { ToolInterface } from "@langchain/core/tools";
 import mydi from "./mydi";
+import { RunnablePassthrough, RunnableSequence } from "langchain/dist/schema/runnable";
 
-export class BaseAgent {
+
+export class BaseChain {
 
     container: any;
     tools: ToolInterface[];
-    name: string;
+    name: string = "override this";
+    description: string = "override this";
     prompt: PromptTemplate;
     llm: LLM;
     template: string = `
-        ## Question: {question}
-        ## Answer: {answer}
-        Given the above question and answer, generate a chain of thought explanation for the answer.
-        First, start with the model generated chain of thought explanation.
-        End the chain of though explanation with:
-        Therefore, the answer is {answer}.
+            {input}
         `
 
-    constructor(container: any) {
+    constructor(container: any, name: string, description: string, template: string="") {
         this.container = container;
-        this.name = this.snake_case(this.constructor.name);
+        this.name = name;
+        this.description = description;
         this.tools = this.resolve("tools")
         this.prompt = this.resolve("prompt") !== "" ? this.resolve("prompt") : PromptTemplate.fromTemplate(this.template);
         this.llm = this.resolve("main-llm");
@@ -44,20 +43,13 @@ export class BaseAgent {
         }).replace(/\s+/g, '');
     }
 
-    async run(input: any) {
-        const agent = await createStructuredChatAgent({
-            llm: this.llm,
-            tools: this.tools,
-            prompt: this.prompt,
-        });
-        const agentExecutor = new AgentExecutor({
-            agent: agent,
-            tools: this.tools,
-            verbose: true,
-            handleParsingErrors:
-                "Please try again, paying close attention to the final answer",
-        });
-        return await agentExecutor.invoke(input);
+    // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
+    chain(input: any) {
+        const _chain = RunnableSequence.from([
+            new RunnablePassthrough(),
+            this.llm,
+            this.prompt,
+        ])
+        return _chain.invoke(input);
     }
-
 }
