@@ -2,7 +2,7 @@ import type { PromptTemplate } from "@langchain/core/prompts";
 import { LLM } from "langchain/llms/base";
 import { AgentExecutor, createReactAgent } from "langchain/agents";
 import type { ToolInterface } from "@langchain/core/tools";
-
+import mydi from "./mydi";
 
 export class BaseAgent {
 
@@ -14,10 +14,14 @@ export class BaseAgent {
 
     constructor(container: any) {
         this.container = container;
-        this.tools = this.container.resolve("tools")
         this.name = this.snake_case(this.constructor.name);
-        this.prompt = this.container.resolve("prompt");
-        this.llm = this.container.resolve("main-llm");
+        this.tools = this.resolve("tools")
+        this.prompt = this.resolve("prompt");
+        this.llm = this.resolve("main-llm");
+    }
+
+    resolve(name: string) {
+        return mydi(this.container, this.name, name);
     }
 
     camelize(str: string) {
