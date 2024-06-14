@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { GoogleVertexAI } from "langchain/llms/googlevertexai";
+import {Ollama } from "@langchain/community/llms/ollama";
 import { PromptTemplate } from "langchain/prompts";
 import { pull } from "langchain/hub";
 
@@ -12,10 +13,16 @@ const bootstrap = async () => {
         model: "text-bison",
         temperature: 0.2,
     });
+
+    const ollama = new Ollama({
+        baseUrl: "http://localhost:11434",
+        model: "phi3"
+    });
+
     const prompt = await pull<PromptTemplate>("hwchase17/react");
-    
+
     container.register("main-llm", {
-        useValue: google_vertex_ai,
+        useValue: ollama,
     });
     container.register("tools", {
         useValue: [],
