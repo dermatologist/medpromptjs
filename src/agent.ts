@@ -14,28 +14,24 @@ export class BaseAgent {
 
     default_prompt = PromptTemplate.fromTemplate(
         `
+        {chat_history}
+        If you have a choice between a tool and final answer, always choose the final answer.
         Answer the following questions as best you can. You have access to the following tools:
 
         {tools}
 
         Use the following format:
 
-        Question: the input question you must answer
+            Question: the input question you must answer
+            Thought: you should always think about what to do
+            Action: the action to take, should be one of [{tool_names}]
+            Action Input: the input to the action
+            Observation: the result of the action
+            ... (this Thought/Action/Action Input/Observation can repeat N times)
+            Thought: I now know the final answer
+            Final Answer: the final answer to the original input question
 
-        Thought: you should always think about what to do
-
-        Action: the action to take, should be one of [{tool_names}]
-
-        Action Input: the input to the action
-
-        Observation: the result of the action
-
-        ... (this Thought/Action/Action Input/Observation can repeat N times)
-
-        Thought: I now know the final answer
-
-        Final Answer: the final answer to the original input question
-
+        If you have a final answer, skip actions and output the final answer.
         Begin!
 
         Question: {input}
@@ -47,7 +43,7 @@ export class BaseAgent {
         this.container = container;
         this.name = this.snake_case(this.constructor.name);
         this.tools = this.resolve("tools")
-        this.prompt = this.resolve("prompt");
+        this.prompt = this.resolve("prompt") !== "" ? this.resolve("prompt") : this.default_prompt;
         this.llm = this.resolve("main-llm");
     }
 

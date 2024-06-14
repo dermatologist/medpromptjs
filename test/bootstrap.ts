@@ -10,7 +10,7 @@ import { pull } from "langchain/hub";
 
 const bootstrap = async () => {
     const google_vertex_ai = new GoogleVertexAI({
-        model: "text-bison",
+        model: "text-bison@001",
         temperature: 0.2,
     });
 
@@ -19,7 +19,6 @@ const bootstrap = async () => {
         model: "phi3"
     });
 
-    const prompt = await pull<PromptTemplate>("hwchase17/react");
 
     container.register("main-llm", {
         useValue: google_vertex_ai,
@@ -28,7 +27,7 @@ const bootstrap = async () => {
         useValue: [],
     });
     container.register("prompt", {
-        useValue: prompt,
+        useValue: "",
     });
 
 
