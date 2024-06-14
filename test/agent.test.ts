@@ -26,7 +26,7 @@ describe('BaseAgent', () => {
       const SECONDS = 1000;
         it('should correctly run the agent', async () => {
           const _input = {
-            input: "Show a random number",
+            input: "Genrate a random number between 10 and 30",
             chat_history: [],
           }
             const result = await baseAgent.run(_input);
