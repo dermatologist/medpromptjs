@@ -53,7 +53,7 @@ export class BaseAgent {
         const agentExecutor = new AgentExecutor({
             agent: agent,
             tools: this.tools,
-            verbose: true,
+            // verbose: true,
             handleParsingErrors:
                 "Please try again, paying close attention to the final answer",
         });

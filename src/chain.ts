@@ -3,8 +3,7 @@ import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
 import { LLM } from "langchain/llms/base";
 import type { ToolInterface } from "@langchain/core/tools";
 import mydi from "./mydi";
-import { RunnablePassthrough, RunnableSequence } from "langchain/dist/schema/runnable";
-
+import { RunnablePassthrough, RunnableSequence } from "@langchain/core/runnables";
 
 export class BaseChain {
 
