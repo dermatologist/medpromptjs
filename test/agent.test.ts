@@ -25,7 +25,11 @@ describe('BaseAgent', () => {
     describe('run', () => {
       const SECONDS = 1000;
         it('should correctly run the agent', async () => {
-            const result = await baseAgent.run('Tell me a joke about cats');
+          const _input = {
+            input: "Show a random number",
+            chat_history: [],
+          }
+            const result = await baseAgent.run(_input);
             // console.log(JSON.stringify(result));
             // expect(result).toEqual(expect.any(String));
         }, 90 * SECONDS);

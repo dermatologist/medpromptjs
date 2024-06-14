@@ -1,4 +1,4 @@
-import type { PromptTemplate } from "@langchain/core/prompts";
+import { PromptTemplate } from "@langchain/core/prompts";
 import { LLM } from "langchain/llms/base";
 import { AgentExecutor, createReactAgent } from "langchain/agents";
 import type { ToolInterface } from "@langchain/core/tools";
@@ -11,6 +11,37 @@ export class BaseAgent {
     name: string;
     prompt: PromptTemplate;
     llm: LLM;
+
+    default_prompt = PromptTemplate.fromTemplate(
+        `
+        Answer the following questions as best you can. You have access to the following tools:
+
+        {tools}
+
+        Use the following format:
+
+        Question: the input question you must answer
+
+        Thought: you should always think about what to do
+
+        Action: the action to take, should be one of [{tool_names}]
+
+        Action Input: the input to the action
+
+        Observation: the result of the action
+
+        ... (this Thought/Action/Action Input/Observation can repeat N times)
+
+        Thought: I now know the final answer
+
+        Final Answer: the final answer to the original input question
+
+        Begin!
+
+        Question: {input}
+
+        Thought:{agent_scratchpad}`
+    );
 
     constructor(container: any) {
         this.container = container;
@@ -49,7 +80,7 @@ export class BaseAgent {
             handleParsingErrors:
                 "Please try again, paying close attention to the final answer",
         });
-        return await agentExecutor.invoke({ input: input});
+        return await agentExecutor.invoke(input);
     }
 
 }
