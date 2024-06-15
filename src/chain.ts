@@ -20,8 +20,8 @@ export class BaseChain {
 
     constructor(container: any, name: string, description: string, template: string="") {
         this.container = container;
-        this.name = name;
-        this.description = description;
+        this.name = name === "" ? this.camelize(this.constructor.name) : name;
+        this.description = description === "" ? this.snake_case(this.constructor.name) : description;
         this.tools = this.resolve("tools")
         this.prompt = this.resolve("prompt") !== "" ? this.resolve("prompt") : PromptTemplate.fromTemplate(this.template);
         this.llm = this.resolve("main-llm");
@@ -43,16 +43,11 @@ export class BaseChain {
         }).replace(/\s+/g, '');
     }
 
-    _print(input: any) {
-        console.log(input);
-        return input;
-    }
 
     // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
     chain(input: any) {
         const _chain = RunnableSequence.from([
             new RunnablePassthrough(),
-            this._print,
             this.prompt,
             this.llm
         ])
