@@ -1,11 +1,11 @@
 import { BaseChain } from '../src';
-import bootsrap from './bootstrap';
+import bootstrap from './bootstrap';
 
 describe('BaseChain', () => {
   let baseChain: BaseChain;
 
   beforeAll(async () => {
-    const _container = await bootsrap();
+    const _container = await bootstrap();
     baseChain = new BaseChain(_container, "baseChain", "base chain");
   });
 

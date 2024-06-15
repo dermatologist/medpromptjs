@@ -1,11 +1,11 @@
 import { BaseTool } from '../src';
-import bootsrap from './bootstrap';
+import bootstrap from './bootstrap';
 
 describe('BaseTool', () => {
   let baseTool: BaseTool;
 
     beforeAll(async () => {
-        const _container = await bootsrap();
+        const _container = await bootstrap();
         baseTool = new BaseTool(_container, "baseTool", "base tool", {});
     });
 
