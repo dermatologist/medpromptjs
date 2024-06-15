@@ -1,18 +1,18 @@
-import "../bootstrap";
-import { SelfGenCotChain } from "../chains/self_gen_cot_chain";
-import { ExplainAgent } from '../../src/agents/explain_agent';
-import * as dotenv from "dotenv";
+import { BaseChain, BaseAgent } from "../../dist/medpromptjs.esm.js"
+import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 dotenv.config();
 
+
 const app = express();
 app.use(cors({ origin: "*" }));
 
-const chain = new SelfGenCotChain();
-const agent = new ExplainAgent();
 
-app.get("/explain", async (req: any, res: any) => {
+const chain = new BaseChain();
+const agent = new BaseAgent();
+
+app.get("/explain", async (req, res) => {
     const input = req.query.input;
     const chat_history = req.query.chat_history;
     const input2 = {
@@ -27,8 +27,7 @@ app.get("/explain", async (req: any, res: any) => {
     }
 });
 
-
-app.get("/chain", async (req: any, res: any) => {
+app.get("/chain", async (req, res) => {
     const question = req.query.question;
     const answer = req.query.answer;
     const input = {
@@ -43,9 +42,6 @@ app.get("/chain", async (req: any, res: any) => {
     }
 });
 
-
 app.listen(5000, () => {
     console.log("Server running on http://localhost:5000");
 });
-
-export default app;

@@ -1,4 +1,4 @@
-import { SelfGenCotChain, ExplainAgent } from "medpromptjs"
+import { BaseChain, BaseAgent } from "medpromptjs"
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
@@ -9,8 +9,8 @@ const app = express();
 app.use(cors({ origin: "*" }));
 
 
-const chain = new SelfGenCotChain();
-const agent = new ExplainAgent();
+const chain = new BaseChain();
+const agent = new BaseAgent();
 
 app.get("/explain", async (req, res) => {
     const input = req.query.input;
