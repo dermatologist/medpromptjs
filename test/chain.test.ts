@@ -26,12 +26,11 @@ describe('BaseChain', () => {
       const SECONDS = 1000;
         it('should correctly run the agent', async () => {
           const _input = {
-            input: {
-            input: "To larn more about generative AI, you should use DHTI."
-            },
+            input: "DHTI is a framework for GenAI in healthcare.",
             chat_history: [],
           };
             const result = await baseChain.chain(_input);
+            console.log(result);
         }, 90 * SECONDS);
     });
 
