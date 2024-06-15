@@ -7,19 +7,21 @@ export class BaseTool extends DynamicStructuredTool {
     name: string;
     description: string;
     schema: any;
-    constructor(container: any, name: string, description: string, schema: any) {
+    constructor(container: any, name: string, description: string, schema: any, func: any = null) {
         super({
             name: name,
             description: description,
             schema: schema,
-            func: async () => {
-                return "override this";
-            }
+            func: func
         });
         this.container = container;
         this.name = name === "" ? this.camelize(this.constructor.name) : name;
         this.description = description === "" ? this.snake_case(this.constructor.name) : description;
         this.schema = schema;
+    }
+
+    func = async (args: any) => {
+                return "override this";
     }
 
     resolve(name: string) {
