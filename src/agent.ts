@@ -22,7 +22,7 @@ export class BaseAgent {
 
     constructor(container: any) {
         this.container = container;
-        this.name = this.snake_case(this.constructor.name);
+        this.name = this.camelize(this.constructor.name);
         this.tools = this.resolve("tools")
         this.prompt = this.resolve("prompt") !== "" ? this.resolve("prompt") : PromptTemplate.fromTemplate(this.template);
         this.llm = this.resolve("main-llm");

@@ -53,6 +53,9 @@ const bootstrap = async () => {
     container.register("prompt", {
         useValue: prompt,
     });
+    container.register("baseChain_prompt", {
+        useValue: "",
+    });
 
 
     return container;

@@ -14,6 +14,7 @@ export class BaseChain {
     prompt: PromptTemplate;
     llm: LLM;
     template: string = `
+        Summarize the following text:
             {input}
         `
 
@@ -42,12 +43,18 @@ export class BaseChain {
         }).replace(/\s+/g, '');
     }
 
+    _print(input: any) {
+        console.log(input);
+        return input;
+    }
+
     // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
     chain(input: any) {
         const _chain = RunnableSequence.from([
             new RunnablePassthrough(),
-            this.llm,
+            this._print,
             this.prompt,
+            this.llm
         ])
         return _chain.invoke(input);
     }

@@ -18,7 +18,7 @@ describe('BaseAgent', () => {
 
   describe('name', () => {
     it('should correctly set the name of the agent', () => {
-      expect(baseAgent.name).toEqual('base_agent');
+      expect(baseAgent.name).toEqual('baseAgent');
     });
   });
 

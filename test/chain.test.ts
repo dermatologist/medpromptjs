@@ -6,7 +6,7 @@ describe('BaseChain', () => {
 
     beforeAll(async () => {
         const _container = await bootsrap();
-        baseChain = new BaseChain(_container, "base_chain", "base chain");
+        baseChain = new BaseChain(_container, "baseChain", "base chain");
     });
 
       describe('camelize', () => {
@@ -18,7 +18,7 @@ describe('BaseChain', () => {
 
   describe('name', () => {
     it('should correctly set the name of the agent', () => {
-      expect(baseChain.name).toEqual('base_chain');
+      expect(baseChain.name).toEqual('baseChain');
     });
   });
 
@@ -26,9 +26,11 @@ describe('BaseChain', () => {
       const SECONDS = 1000;
         it('should correctly run the agent', async () => {
           const _input = {
-            input: "Genrate a random number between 10 and 30",
+            input: {
+            input: "To larn more about generative AI, you should use DHTI."
+            },
             chat_history: [],
-          }
+          };
             const result = await baseChain.chain(_input);
         }, 90 * SECONDS);
     });
