@@ -17,10 +17,9 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Generate changelog
-        uses: charmixer/auto-changelog-action@v1
+        uses: heinrichreimer/action-github-changelog-generator@v2.3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max-issues: 25
+          token: ${{ secrets.GITHUB_TOKEN }} 
       - name: "cat package.json"
         run: cat ./package.json
       - name: "Setup Node.js"
