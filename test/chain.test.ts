@@ -1,4 +1,4 @@
-import { BaseChain } from '../src/chain';
+import { BaseChain } from '../src';
 import bootsrap from './bootstrap';
 
 describe('BaseChain', () => {

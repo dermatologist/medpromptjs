@@ -1,4 +1,4 @@
-import { BaseTool } from '../src/tool';
+import { BaseTool } from '../src';
 import bootsrap from './bootstrap';
 
 describe('BaseTool', () => {

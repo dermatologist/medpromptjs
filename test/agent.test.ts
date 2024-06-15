@@ -1,4 +1,4 @@
-import { BaseAgent } from '../src/agent';
+import { BaseAgent } from '../src';
 import bootsrap from './bootstrap';
 
 describe('BaseAgent', () => {
