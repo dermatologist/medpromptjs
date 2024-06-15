@@ -1,5 +1,6 @@
-import "../test/bootstrap";
+import mydi from "./mydi";
 
-export { SelfGenCotChain } from "./chains/self_gen_cot_chain";
-export { ExplainAgent } from './agents/explain_agent';
-
+export { BaseChain } from "./chain";
+export { BaseAgent } from './agent';
+export { BaseTool } from './tool';
+mydi
