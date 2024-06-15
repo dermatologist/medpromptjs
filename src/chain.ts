@@ -9,8 +9,8 @@ export class BaseChain {
 
     container: any;
     tools: ToolInterface[];
-    name: string = "override this";
-    description: string = "override this";
+    name: string;
+    description: string;
     prompt: PromptTemplate;
     llm: LLM;
     template: string = `
@@ -45,6 +45,7 @@ export class BaseChain {
 
 
     // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
+    //! Override this method
     chain(input: any) {
         const _chain = RunnableSequence.from([
             new RunnablePassthrough(),
