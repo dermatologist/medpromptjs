@@ -10,17 +10,17 @@ jobs:
   bump-version:
     name: "Bump Version on release branch"
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 1
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v4"
         with:
           ref: ${{ github.ref }}
       - name: Generate changelog
-        uses: charmixer/auto-changelog-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max-issues: 25
+        uses: heinrichreimer/action-github-changelog-generator@v2.3
+        env:
+          CHANGELOG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAX_CHANGELOG_ENTRIES: 5
       - name: "cat package.json"
         run: cat ./package.json
       - name: "Setup Node.js"
