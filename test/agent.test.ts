@@ -1,12 +1,12 @@
-import { AgentExecutor, createStructuredChatAgent } from "langchain/agents";
-import { BaseAgent } from "../src";
-import mydi from "../src/mydi";
+import { AgentExecutor, createStructuredChatAgent } from 'langchain/agents';
+import { BaseAgent } from '../src';
+import mydi from '../src/mydi';
 
-jest.mock("../src/mydi", () => jest.fn());
-jest.mock("langchain/agents", () => ({
+jest.mock('../src/mydi', () => jest.fn());
+jest.mock('langchain/agents', () => ({
   createStructuredChatAgent: jest.fn(),
   AgentExecutor: jest.fn().mockImplementation(() => ({
-    invoke: jest.fn().mockResolvedValue("mocked result"),
+    invoke: jest.fn().mockResolvedValue('mocked result'),
   })),
 }));
 
@@ -32,7 +32,11 @@ describe('BaseAgent', () => {
     (mydi as jest.Mock).mockReturnValue(mockDependency);
     const result = baseAgent.resolve('testDependency');
     expect(result).toBe(mockDependency);
-    expect(mydi).toHaveBeenCalledWith(mockContainer, 'baseAgent', 'testDependency');
+    expect(mydi).toHaveBeenCalledWith(
+      mockContainer,
+      'baseAgent',
+      'testDependency'
+    );
   });
 
   test('camelize should return camelCase string', () => {
@@ -53,16 +57,16 @@ describe('BaseAgent', () => {
     expect(result).toBe('mocked result');
   });
 
-    // // e2e test
-    // describe('run', () => {
-    //   const SECONDS = 1000;
-    //     it('should correctly run the agent', async () => {
-    //       const _input = {
-    //         input: "Genrate a random number between 10 and 30",
-    //         chat_history: [],
-    //       }
-    //         const result = await baseAgent.run(_input);
-    //         console.log(result["output"]);
-    //     }, 90 * SECONDS);
-    // });
+  // // e2e test
+  // describe('run', () => {
+  //   const SECONDS = 1000;
+  //     it('should correctly run the agent', async () => {
+  //       const _input = {
+  //         input: "Genrate a random number between 10 and 30",
+  //         chat_history: [],
+  //       }
+  //         const result = await baseAgent.run(_input);
+  //         console.log(result["output"]);
+  //     }, 90 * SECONDS);
+  // });
 });
