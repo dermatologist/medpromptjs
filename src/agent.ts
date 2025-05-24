@@ -15,7 +15,7 @@
  */
 
 import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
-import { LLM } from "langchain/llms/base";
+import { LLM } from '@langchain/core/language_models/llms';
 import { AgentExecutor, createReactAgent, createStructuredChatAgent } from "langchain/agents";
 import type { ToolInterface } from "@langchain/core/tools";
 import mydi from "./mydi";

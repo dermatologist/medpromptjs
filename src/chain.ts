@@ -15,7 +15,7 @@
  */
 
 import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
-import { LLM } from "langchain/llms/base";
+import { LLM } from '@langchain/core/language_models/llms';
 import type { ToolInterface } from "@langchain/core/tools";
 import mydi from "./mydi";
 import { RunnablePassthrough, RunnableSequence } from "@langchain/core/runnables";

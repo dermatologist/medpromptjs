@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { GoogleVertexAI } from "langchain/llms/googlevertexai";
+import { GoogleVertexAI } from "@langchain/community/llms/googlevertexai";
 import {Ollama } from "@langchain/community/llms/ollama";
 import { ChatPromptTemplate} from "langchain/prompts";
 import { pull } from "langchain/hub";
