@@ -1,8 +1,7 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { GoogleVertexAI } from "@langchain/community/llms/googlevertexai";
 import {Ollama } from "@langchain/community/llms/ollama";
-import { ChatPromptTemplate} from "langchain/prompts";
+import { ChatPromptTemplate} from "@langchain/core/prompts";
 import { pull } from "langchain/hub";
 
 import { z } from "zod";
@@ -10,10 +9,6 @@ import { DynamicTool, DynamicStructuredTool } from "@langchain/core/tools";
 
 
 const bootstrap = async () => {
-    const google_vertex_ai = new GoogleVertexAI({
-        model: "text-bison",
-        temperature: 0.2,
-    });
 
     const ollama = new Ollama({
         baseUrl: "http://localhost:11434",
@@ -45,7 +40,7 @@ const bootstrap = async () => {
 
 
     container.register("main-llm", {
-        useValue: google_vertex_ai,
+        useValue: ollama,
     });
     container.register("tools", {
         useValue: tools,
