@@ -16,7 +16,8 @@ export class LLMLoop extends BaseChain {
       tools : this.tools,
       agent_scratchpad: '',
     };
-    const freeText = await mapQuery.chain(_input);
+    const freeText = await mapQuery.chain(_input, true); //chat_model = true
+    console.log('Free text:', freeText);
     if (expression && context) return true; // Placeholder for assertion check logic
     return false;
   }

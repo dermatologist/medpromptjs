@@ -22,6 +22,7 @@ import {
   RunnablePassthrough,
   RunnableSequence,
 } from '@langchain/core/runnables';
+import { AIMessage } from '@langchain/core/messages';
 
 export class BaseChain {
   container: any;
@@ -75,12 +76,23 @@ export class BaseChain {
 
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
-  chain(input: any) {
+  async chain(input: any, chat: boolean = false) {
+    if (chat) {
+      this.prompt =
+        this.resolve('prompt') !== ''
+          ? this.resolve('prompt')
+          : ChatPromptTemplate.fromTemplate(this.template);
+    }
     const _chain = RunnableSequence.from([
       new RunnablePassthrough(),
       this.prompt,
       this.llm,
     ]);
+    if(chat) {
+      const response: string = await _chain.invoke(input);
+      const aiMessage = new AIMessage(response);
+      return aiMessage.content;
+    }
     return _chain.invoke(input);
   }
 }
