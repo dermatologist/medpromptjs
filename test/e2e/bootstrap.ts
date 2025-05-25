@@ -5,7 +5,6 @@ import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { pull } from 'langchain/hub';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 
-
 import { z } from 'zod';
 import { DynamicTool, DynamicStructuredTool } from '@langchain/core/tools';
 
@@ -16,7 +15,7 @@ const bootstrap = async () => {
   });
 
   const google = new ChatGoogleGenerativeAI({
-    model: "gemini-2.0-flash",
+    model: 'gemini-2.0-flash',
     maxOutputTokens: 2048,
     apiKey: process.env.GOOGLE_API_KEY,
   });
@@ -47,6 +46,11 @@ const bootstrap = async () => {
   container.register('main-llm', {
     useValue: google,
   });
+
+  container.register('chat_model', {
+    useValue: true,
+  });
+
   container.register('tools', {
     useValue: tools,
   });

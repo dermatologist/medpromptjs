@@ -35,6 +35,7 @@ export class BaseChain {
         Summarize the following text:
             {input}
         `;
+  chat_model: boolean;
 
   constructor(
     container: any,
@@ -52,6 +53,10 @@ export class BaseChain {
         ? this.resolve('prompt')
         : PromptTemplate.fromTemplate(this.template);
     this.llm = this.resolve('main-llm');
+    this.chat_model = false;
+    try {
+      this.chat_model = this.resolve('chat_model');
+    } catch (e) {}
   }
 
   resolve(name: string) {
@@ -76,8 +81,8 @@ export class BaseChain {
 
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
-  async chain(input: any, chat: boolean = false) {
-    if (chat) {
+  async chain(input: any) {
+    if (this.chat_model) {
       this.prompt =
         this.resolve('prompt') !== ''
           ? this.resolve('prompt')
@@ -88,7 +93,7 @@ export class BaseChain {
       this.prompt,
       this.llm,
     ]);
-    if(chat) {
+    if (this.chat_model) {
       const response: string = await _chain.invoke(input);
       const aiMessage = new AIMessage(response);
       return aiMessage.content;
