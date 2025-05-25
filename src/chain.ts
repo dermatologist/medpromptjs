@@ -33,6 +33,7 @@ export class BaseChain {
   llm: LLM;
   template: string;
   chat_model: boolean;
+  runnable: any;
 
   constructor(
     container: any,
@@ -55,7 +56,7 @@ export class BaseChain {
       this.chat_model = this.resolve('chat_model');
     } catch (e) {}
     if (this.chat_model) {
-      this.prompt =  ChatPromptTemplate.fromTemplate(this.template);
+      this.prompt = ChatPromptTemplate.fromTemplate(this.template);
     } else {
       this.prompt = PromptTemplate.fromTemplate(this.template);
     }
@@ -84,16 +85,16 @@ export class BaseChain {
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
   async chain(input: any) {
-    const _chain = RunnableSequence.from([
+    this.runnable = RunnableSequence.from([
       new RunnablePassthrough(),
       this.prompt,
       this.llm,
     ]);
     if (this.chat_model) {
-      const response: string = await _chain.invoke(input);
+      const response: string = await this.runnable.invoke(input);
       const aiMessage = new AIMessage(response);
       return aiMessage.content;
     }
-    return await _chain.invoke(input);
+    return await this.runnable.invoke(input);
   }
 }
