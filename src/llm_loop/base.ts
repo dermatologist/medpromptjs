@@ -10,7 +10,9 @@ export class LLMLoop extends BaseChain {
     const mapQuery = new MapQuery(this.container, '', '');
     // convert expression to free text
     const _input = {
-      input: expression,
+      input: {
+        input: expression,
+      },
       chat_history: [],
       tool_names: [],
       tools: this.tools,

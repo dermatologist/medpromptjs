@@ -29,34 +29,36 @@ export class BaseChain {
   tools: ToolInterface[];
   name: string;
   description: string;
-  prompt: PromptTemplate;
+  prompt: any;
   llm: LLM;
-  template: string = `
-        Summarize the following text:
-            {input}
-        `;
+  template: string;
   chat_model: boolean;
 
   constructor(
     container: any,
     name: string,
     description: string,
-    template: string = ''
+    template: string = `
+    Summarize the following text:
+        {input}
+    `
   ) {
     this.container = container;
     this.name = name === '' ? this.camelize(this.constructor.name) : name;
     this.description =
       description === '' ? this.snake_case(this.constructor.name) : description;
+    this.template = template;
     this.tools = this.resolve('tools');
-    this.prompt =
-      this.resolve('prompt') !== ''
-        ? this.resolve('prompt')
-        : PromptTemplate.fromTemplate(this.template);
     this.llm = this.resolve('main-llm');
     this.chat_model = false;
     try {
       this.chat_model = this.resolve('chat_model');
     } catch (e) {}
+    if (this.chat_model) {
+      this.prompt =  ChatPromptTemplate.fromTemplate(this.template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this.template);
+    }
   }
 
   resolve(name: string) {
@@ -82,12 +84,6 @@ export class BaseChain {
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
   async chain(input: any) {
-    if (this.chat_model) {
-      this.prompt =
-        this.resolve('prompt') !== ''
-          ? this.resolve('prompt')
-          : ChatPromptTemplate.fromTemplate(this.template);
-    }
     const _chain = RunnableSequence.from([
       new RunnablePassthrough(),
       this.prompt,
@@ -98,6 +94,6 @@ export class BaseChain {
       const aiMessage = new AIMessage(response);
       return aiMessage.content;
     }
-    return _chain.invoke(input);
+    return await _chain.invoke(input);
   }
 }

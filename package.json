@@ -31,7 +31,7 @@
     "size": "size-limit",
     "start": "dts watch",
     "test": "dts test --verbose --testPathIgnorePatterns=./test/e2e/*",
-    "e2e": "dts test --verbose ./test/e2e",
+    "e2e": "dts test --verbose ./test/e2e --detectOpenHandles",
     "docs": "typedoc --out docs src"
   },
   "husky": {

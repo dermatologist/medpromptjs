@@ -1,6 +1,8 @@
 import { LLMLoop } from '../../src/llm_loop/base';
 import bootstrap from './bootstrap';
 
+jest.setTimeout(60000);
+
 describe('LLMLoop', () => {
   let llmLoop: LLMLoop;
 
@@ -11,7 +13,17 @@ describe('LLMLoop', () => {
 
 
   it('should check assertion correctly', async () => {
-    const result = await llmLoop.checkAssertion('test', {});
+    const cql = `
+     exists (
+        [DocumentReference] D
+        where D.allergies="Penicillin"
+        and D.complaint="Headache"
+        and D.complaint="Weakness" or D.complaint="Numbness"
+        and D.findings="Intact sensation to light touch"
+        )
+      `
+
+    const result = await llmLoop.checkAssertion(cql, {});
     expect(result).toBe(true);
   });
 

@@ -11,7 +11,7 @@ import { DynamicTool, DynamicStructuredTool } from '@langchain/core/tools';
 const bootstrap = async () => {
   const ollama = new Ollama({
     baseUrl: 'http://localhost:11434',
-    model: 'phi3',
+    model: 'phi3:mini',
   });
 
   const google = new ChatGoogleGenerativeAI({
@@ -44,11 +44,7 @@ const bootstrap = async () => {
   ];
 
   container.register('main-llm', {
-    useValue: google,
-  });
-
-  container.register('chat_model', {
-    useValue: true,
+    useValue: ollama,
   });
 
   container.register('tools', {
