@@ -20,9 +20,6 @@ const bootstrap = async () => {
     apiKey: process.env.GOOGLE_API_KEY,
   });
 
-  const prompt = await pull<ChatPromptTemplate>(
-    'hwchase17/structured-chat-agent'
-  );
 
   const tools = [
     new DynamicTool({
@@ -44,15 +41,17 @@ const bootstrap = async () => {
   ];
 
   container.register('main-llm', {
-    useValue: ollama,
+    useValue: google,
+  });
+
+  container.register('chat_model', {
+    useValue: true,
   });
 
   container.register('tools', {
     useValue: tools,
   });
-  container.register('prompt', {
-    useValue: prompt,
-  });
+
   container.register('baseChain_prompt', {
     useValue: '',
   });

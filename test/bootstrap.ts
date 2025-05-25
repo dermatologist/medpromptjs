@@ -13,9 +13,7 @@ const bootstrap = async () => {
     model: 'phi3',
   });
 
-  const prompt = await pull<ChatPromptTemplate>(
-    'hwchase17/structured-chat-agent'
-  );
+
 
   const tools = [
     new DynamicTool({
@@ -42,9 +40,7 @@ const bootstrap = async () => {
   container.register('tools', {
     useValue: tools,
   });
-  container.register('prompt', {
-    useValue: prompt,
-  });
+
   container.register('baseChain_prompt', {
     useValue: '',
   });
