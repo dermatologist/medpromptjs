@@ -1,5 +1,5 @@
 import { BaseChain } from '../chain';
-
+import { MapQuery } from './map_query';
 export class LLMLoop extends BaseChain {
   // Implement the LLM loop logic here
   string_expression: string = '';
@@ -7,6 +7,16 @@ export class LLMLoop extends BaseChain {
   description: string = 'Base LLM Loop.';
 
   async checkAssertion(expression: string, context: any): Promise<boolean> {
+    const mapQuery = new MapQuery(this.container, '', '');
+    // convert expression to free text
+    const _input = {
+      input: expression,
+      chat_history: [],
+      tool_names: [],
+      tools : this.tools,
+      agent_scratchpad: '',
+    };
+    const freeText = await mapQuery.chain(_input);
     if (expression && context) return true; // Placeholder for assertion check logic
     return false;
   }

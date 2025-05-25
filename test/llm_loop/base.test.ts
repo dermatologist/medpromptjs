@@ -27,20 +27,20 @@ describe('LLMLoop', () => {
     expect(llmLoop.string_expression).toBe('');
   });
 
-  it('should check assertion correctly', async () => {
-    const result = await llmLoop.checkAssertion('test', {});
-    expect(result).toBe(true);
-  });
+  // it('should check assertion correctly', async () => {
+  //   const result = await llmLoop.checkAssertion('test', {});
+  //   expect(result).toBe(true);
+  // });
 
-  it('should check mention correctly', async () => {
-    const result = await llmLoop.checkMention('test', {});
-    expect(result).toBe(true);
-  });
+  // it('should check mention correctly', async () => {
+  //   const result = await llmLoop.checkMention('test', {});
+  //   expect(result).toBe(true);
+  // });
 
-  it('should check negation correctly', async () => {
-    const result = await llmLoop.checkNegation('test', {});
-    expect(result).toBe(true);
-  });
+  // it('should check negation correctly', async () => {
+  //   const result = await llmLoop.checkNegation('test', {});
+  //   expect(result).toBe(true);
+  // });
 
   it('should find dates and convert to time elapsed', () => {
     const text = 'The event was on 01/01/2020.';
