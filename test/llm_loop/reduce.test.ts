@@ -1,35 +1,37 @@
 import { ReduceChain } from '../../src/llm_loop/reduce';
 import bootstrap from '../bootstrap';
 
-describe("ReduceChain", () => {
+describe('ReduceChain', () => {
   let reduceChain: ReduceChain;
 
   beforeAll(async () => {
     const _container = await bootstrap();
-    reduceChain = new ReduceChain(_container, "", "");
+    reduceChain = new ReduceChain(_container, '', '');
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(reduceChain).toBeDefined();
   });
 
-  it("should have the correct name", () => {
-    expect(reduceChain.name).toBe("Reduce");
+  it('should have the correct name', () => {
+    expect(reduceChain.name).toBe('Reduce');
   });
 
-  it("should have the correct description", () => {
+  it('should have the correct description', () => {
     expect(reduceChain.description).toBe(
-      "Reduce a set of documents to binary answer."
+      'Reduce a set of documents to binary answer.'
     );
   });
 
-  it("should contain example document chunks in the template", () => {
-    expect(reduceChain.template).toContain("document: {document}");
-    expect(reduceChain.template).toContain("question: Does the document mention {question} Say yes or no::");
+  it('should contain example document chunks in the template', () => {
+    expect(reduceChain.template).toContain('document: {document}');
+    expect(reduceChain.template).toContain(
+      'question: Does the document mention {question} Say yes or no::'
+    );
   });
 
-  it("should include the {question} placeholder in the template", () => {
-    expect(reduceChain.template).toContain("{question}");
+  it('should include the {question} placeholder in the template', () => {
+    expect(reduceChain.template).toContain('{question}');
   });
 
   it("should end the template with 'yes or no::'", () => {

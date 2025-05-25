@@ -12,6 +12,7 @@
     },
     "cSpell.words": [
         "fhir"
-    ]
+    ],
+    "jest.jestCommandLine": "npm test"
 
 }
