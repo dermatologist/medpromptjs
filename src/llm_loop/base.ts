@@ -67,14 +67,22 @@ export class LLMLoop extends BaseChain {
   }
 
   stringToBoolean(str: string): boolean {
-    if (
-      str.toLocaleLowerCase() === 'true' ||
-      str === '1' ||
-      str.toLowerCase() === 'yes'
-    ) {
-      return true;
-    }
-    return false;
+    const positiveKeywords = [
+      'true',
+      'contains',
+      'confirms',
+      'yes',
+      'affirmative',
+      'matches',
+      'exists',
+      'present',
+      'absolutely',
+      'certainly',
+      'definitely',
+      'indeed',
+    ];
+    const lowerStr = str.toLowerCase();
+    return positiveKeywords.some(keyword => lowerStr.includes(keyword));
   }
 
   async textSplitter(
@@ -83,10 +91,13 @@ export class LLMLoop extends BaseChain {
     chunkOverlap: number = 0
   ): Promise<string[]> {
     const textSplitter = new CharacterTextSplitter({
-      chunkSize: 100,
-      chunkOverlap: 0,
+      chunkSize: chunkSize,
+      chunkOverlap: chunkOverlap,
     });
     const texts = await textSplitter.splitText(text);
+    console.log(
+      `Text split into ${texts.length} chunks with size ${chunkSize} and overlap ${chunkOverlap}`
+    );
     return texts;
   }
 
