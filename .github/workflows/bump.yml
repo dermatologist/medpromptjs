@@ -16,11 +16,12 @@ jobs:
         uses: "actions/checkout@v4"
         with:
           ref: ${{ github.ref }}
-      - name: Generate changelog
-        uses: heinrichreimer/action-github-changelog-generator@v2.3
+      - name: "✏️ Generate release changelog"
+        uses: janheinrichmerker/action-github-changelog-generator@v2.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           maxIssues: 10
+          httpCache: true
       - name: "cat package.json"
         run: cat ./package.json
       - name: "Setup Node.js"
