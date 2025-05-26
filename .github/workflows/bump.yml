@@ -20,12 +20,13 @@ jobs:
         uses: janheinrichmerker/action-github-changelog-generator@v2.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          maxIssues: 10
+          user: dermatologist
+          maxIssues: 3
           httpCache: true
       - name: "cat package.json"
         run: cat ./package.json
       - name: "Setup Node.js"
-        uses: "actions/setup-node@v4.0.1"
+        uses: "actions/setup-node@v4.4.0"
         with:
           node-version: 12
       - name: "Automated Version Bump"
