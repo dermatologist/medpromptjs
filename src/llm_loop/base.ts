@@ -10,18 +10,17 @@ export class LLMLoop extends BaseChain {
   description: string = 'Base LLM Loop.';
   mapQuery: MapQuery = new MapQuery(this.container, '', '');
   mapDoc: MapDoc = new MapDoc(this.container, '', '');
-  reduceChain : ReduceChain = new ReduceChain(this.container, '', '');
+  reduceChain: ReduceChain = new ReduceChain(this.container, '', '');
 
   async checkAssertion(expression: string, context: string): Promise<boolean> {
-
     const _input = {
       input: {
         expression: expression,
         context: context,
-      }
-    }
+      },
+    };
 
-    return this.chain(_input)
+    return this.chain(_input);
 
     // this.chain(_input).then((result) => {
     //   console.log('Assertion result:', result);
@@ -31,7 +30,6 @@ export class LLMLoop extends BaseChain {
     //   return false;
     // })
     // return false; // Placeholder for assertion check logic
-
   }
 
   async checkMention(expression: string, context: string): Promise<boolean> {
@@ -125,29 +123,33 @@ export class LLMLoop extends BaseChain {
     return this.camelToString(this.string_expression);
   }
 
-  async chain(input: any){
+  async chain(input: any) {
     // Create a chain using RunnableSequence, RunnablePassthrough and RunnableParallel
     // input has two properties: expression and context
     // expression goes through mapQuery and parallely
     // context goes through textSplitter and mapDoc
     // Finally reduceChain is called with the results of mapQuery and mapDoc
     // LCEL-based implementation using RunnableSequence, RunnableParallel, and RunnablePassthrough
-    const { RunnableSequence, RunnableParallel, RunnablePassthrough } = await import('@langchain/core/runnables');
+    const { RunnableSequence, RunnableParallel, RunnablePassthrough } =
+      await import('@langchain/core/runnables');
 
     const mapQueryChain = RunnablePassthrough.assign({
-      query: async (input: any) => this.mapQuery.chain({
-        input: { expression: input.input.expression },
-      }),
+      query: async (input: any) =>
+        this.mapQuery.chain({
+          input: { expression: input.input.expression },
+        }),
     });
 
     const mapDocChain = RunnablePassthrough.assign({
       documents: async (input: any) => {
-      const textChunks = await this.textSplitter(input.input.context);
-      return Promise.all(
-        textChunks.map((chunk) =>
-        this.mapDoc.chain({input: { document: chunk, question: input.input.expression }})
-        )
-      );
+        const textChunks = await this.textSplitter(input.input.context);
+        return Promise.all(
+          textChunks.map((chunk) =>
+            this.mapDoc.chain({
+              input: { document: chunk, question: input.input.expression },
+            })
+          )
+        );
       },
     });
 
@@ -156,20 +158,19 @@ export class LLMLoop extends BaseChain {
     const sequence = RunnableSequence.from([
       parallelChain,
       async (results: any) => {
-      // results is an array: [{ query: ... }, { documents: [...] }]
-      const query = results[0].query;
-      const documents = results[1].documents;
-      return this.reduceChain.chain({
-        input: {
-          query: query,
-          facts: documents,
-        },
-      });
+        // results is an array: [{ query: ... }, { documents: [...] }]
+        const query = results[0].query;
+        const documents = results[1].documents;
+        return this.reduceChain.chain({
+          input: {
+            query: query,
+            facts: documents,
+          },
+        });
       },
       (result: any) => this.stringToBoolean(result),
     ]);
 
     return sequence.invoke(input);
-
   }
 }

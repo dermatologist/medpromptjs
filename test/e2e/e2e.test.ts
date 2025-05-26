@@ -11,7 +11,6 @@ describe('LLMLoop', () => {
     llmLoop = new LLMLoop(_container, '', '');
   });
 
-
   it('should check assertion correctly', async () => {
     const expression = `
      exists (
@@ -21,7 +20,7 @@ describe('LLMLoop', () => {
         and D.complaint="Weakness" or D.complaint="Numbness"
         and D.findings="Intact sensation to light touch"
         )
-      `
+      `;
     const context = `
       Patient is a 48 year-old well-nourished Hispanic male with a 2-month
       history of Rheumatoid Arthritis and strong family history of autoimmune diseases presenting after
@@ -69,6 +68,4 @@ describe('LLMLoop', () => {
     const result = await llmLoop.checkNegation('test', 'test');
     expect(result).toBe(true);
   });
-
-
 });
