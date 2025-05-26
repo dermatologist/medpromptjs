@@ -3,6 +3,9 @@ import { MapQuery } from './map_query';
 import { CharacterTextSplitter } from '@langchain/textsplitters';
 import { ReduceChain } from './reduce';
 import { MapDoc } from './map_doc';
+import { Logger, ILogObj } from 'tslog';
+
+const log: Logger<ILogObj> = new Logger();
 export class LLMLoop extends BaseChain {
   // Implement the LLM loop logic here
   string_expression: string = '';
@@ -55,8 +58,6 @@ export class LLMLoop extends BaseChain {
       text = text.replace(matches[0], Math.floor(timeElapsed).toString());
       text += ' days ago.';
     }
-
-    console.log(text);
     return text;
   }
 
@@ -67,6 +68,7 @@ export class LLMLoop extends BaseChain {
   }
 
   stringToBoolean(str: string): boolean {
+    log.info(`Converting string to boolean: ${str}`);
     const positiveKeywords = [
       'true',
       'contains',
@@ -82,7 +84,7 @@ export class LLMLoop extends BaseChain {
       'indeed',
     ];
     const lowerStr = str.toLowerCase();
-    return positiveKeywords.some(keyword => lowerStr.includes(keyword));
+    return positiveKeywords.some((keyword) => lowerStr.includes(keyword));
   }
 
   async textSplitter(
@@ -95,7 +97,22 @@ export class LLMLoop extends BaseChain {
       chunkOverlap: chunkOverlap,
     });
     const texts = await textSplitter.splitText(text);
-    console.log(
+    // Log the number of chunks created
+    if (texts.length === 0) {
+      log.warn('No text chunks created. Please check the input text.');
+      return [];
+    }
+    if (texts.length > 100) {
+      log.warn(
+        `Warning: More than 100 text chunks created (${texts.length}). This may affect performance.`
+      );
+    }
+    if (chunkSize < 1000) {
+      log.warn(
+        `Warning: Chunk size is less than 1000 characters (${chunkSize}). This may lead to very small chunks.`
+      );
+    }
+    log.info(
       `Text split into ${texts.length} chunks with size ${chunkSize} and overlap ${chunkOverlap}`
     );
     return texts;
