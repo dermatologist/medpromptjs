@@ -17,7 +17,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Generate changelog
-        uses: heinrichreimer/action-github-changelog-generator@v2.3
+        uses: heinrichreimer/action-github-changelog-generator@v2.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           maxIssues: 10
