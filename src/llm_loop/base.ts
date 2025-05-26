@@ -48,8 +48,10 @@ export class LLMLoop extends BaseChain {
       let date = new Date(matches[0]);
       let timeElapsed =
         (currentDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
-      text = text.replace(matches[0], Math.floor(timeElapsed).toString());
-      text += ' days ago.';
+      text = text.replace(
+        matches[0],
+        Math.floor(timeElapsed).toString() + ' days ago.'
+      );
     }
     return text;
   }
