@@ -29,7 +29,7 @@ CQL:    exists (
 answer>> Diverticulitis diagnosis, Fever complaint, Colon resection procedure, and no Fluid collection finding?
 
 Now convert the following CQL query to a natural language.
-CQL: {cql}
+CQL: {expression}
 
 answer>>
         `;

@@ -1,5 +1,6 @@
 import { BaseChain } from '../chain';
 import { MapQuery } from './map_query';
+import { CharacterTextSplitter } from '@langchain/textsplitters';
 export class LLMLoop extends BaseChain {
   // Implement the LLM loop logic here
   string_expression: string = '';
@@ -10,13 +11,10 @@ export class LLMLoop extends BaseChain {
     const mapQuery = new MapQuery(this.container, '', '');
     // convert expression to free text
     const _input = {
-      input: {
-        input: expression,
-      },
-      chat_history: [],
-      tool_names: [],
-      tools: this.tools,
-      agent_scratchpad: '',
+        input: {
+          expression: expression,
+          context: context,
+        }
     };
     const freeText = await mapQuery.chain(_input);
     console.log('Free text:', freeText);
@@ -58,6 +56,22 @@ export class LLMLoop extends BaseChain {
     });
   }
 
+  stringToBoolean(str: string): boolean {
+    if (str.toLocaleLowerCase() === 'true' || str === '1' || str.toLowerCase() === 'yes') {
+      return true;
+    }
+    return false;
+  }
+
+  async textSplitter(text: string, chunkSize: number = 3900, chunkOverlap: number = 0): Promise<string[]> {
+    const textSplitter = new CharacterTextSplitter({
+      chunkSize: 100,
+      chunkOverlap: 0,
+    });
+    const texts = await textSplitter.splitText(text);
+    return texts;
+  }
+
   printValues(obj: any) {
     for (var key in obj) {
       if (typeof obj[key] === 'object') {
@@ -90,4 +104,6 @@ export class LLMLoop extends BaseChain {
     );
     return this.camelToString(this.string_expression);
   }
+
+
 }
