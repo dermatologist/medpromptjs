@@ -15,25 +15,50 @@ export class LLMLoop extends BaseChain {
   mapDoc: MapDoc = new MapDoc(this.container, '', '');
   reduceChain: ReduceChain = new ReduceChain(this.container, '', '');
 
-  async checkAssertion(expression: string, context: string): Promise<boolean> {
+  async checkAssertion(expression: string, context: any): Promise<boolean> {
+    let _expression: string = '';
+    let _context: any = undefined;
+    let _content: string = '';
+    try {
+      // Check if expression is a valid JSON string
+      _expression = this.printValues(JSON.parse(expression));
+    } catch (error) {
+      _expression = expression; // If not, use the expression as is
+    }
+    log.info(`Checking assertion with expression: ${_expression}`);
+    try {
+      // Check if context is a valid JSON string
+      _context = JSON.parse(context);
+      _context.forEach(
+        (element: {
+          content: { attachment: { data: { value: string } } }[];
+        }) => {
+          _content += atob(element.content[0].attachment.data.value);
+        }
+      );
+    } catch (error) {
+      _content = context; // If not, use the context as is
+    }
+
+    _content = this.findDatesAndConvertToTimeElapsed(
+      _content.replace(/(\r\n|\n|\r)/gm, ' ')
+    );
     const _input = {
       input: {
-        expression: expression,
-        context: this.findDatesAndConvertToTimeElapsed(
-          this.camelToString(context)
-        ),
+        expression: _expression,
+        context: _content,
       },
     };
 
     return this.chain(_input);
   }
 
-  async checkMention(expression: string, context: string): Promise<boolean> {
+  async checkMention(expression: string, context: any): Promise<boolean> {
     if (expression && context) return true; // Placeholder for assertion check logic
     return false;
   }
 
-  async checkNegation(expression: string, context: string): Promise<boolean> {
+  async checkNegation(expression: string, context: any): Promise<boolean> {
     if (expression && context) return true; // Placeholder for assertion check logic
     return false;
   }
