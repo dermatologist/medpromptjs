@@ -12,6 +12,10 @@
     },
     "cSpell.words": [
         "fhir"
-    ]
+    ],
+    "jest.jestCommandLine": "npm run test --",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
 
 }

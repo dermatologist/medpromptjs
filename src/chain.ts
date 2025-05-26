@@ -22,35 +22,44 @@ import {
   RunnablePassthrough,
   RunnableSequence,
 } from '@langchain/core/runnables';
+import { AIMessage } from '@langchain/core/messages';
 
 export class BaseChain {
   container: any;
   tools: ToolInterface[];
   name: string;
   description: string;
-  prompt: PromptTemplate;
+  prompt: any;
   llm: LLM;
-  template: string = `
-        Summarize the following text:
-            {input}
-        `;
+  template: string;
+  chat_model: boolean;
+  runnable: any;
 
   constructor(
     container: any,
     name: string,
     description: string,
-    template: string = ''
+    template: string = `
+    Summarize the following text:
+        {input}
+    `
   ) {
     this.container = container;
     this.name = name === '' ? this.camelize(this.constructor.name) : name;
     this.description =
       description === '' ? this.snake_case(this.constructor.name) : description;
+    this.template = template;
     this.tools = this.resolve('tools');
-    this.prompt =
-      this.resolve('prompt') !== ''
-        ? this.resolve('prompt')
-        : PromptTemplate.fromTemplate(this.template);
     this.llm = this.resolve('main-llm');
+    this.chat_model = false;
+    try {
+      this.chat_model = this.resolve('chat_model');
+    } catch (e) {}
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this.template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this.template);
+    }
   }
 
   resolve(name: string) {
@@ -75,12 +84,17 @@ export class BaseChain {
 
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
-  chain(input: any) {
-    const _chain = RunnableSequence.from([
+  async chain(input: any) {
+    this.runnable = RunnableSequence.from([
       new RunnablePassthrough(),
       this.prompt,
       this.llm,
     ]);
-    return _chain.invoke(input);
+    if (this.chat_model) {
+      const response: string = await this.runnable.invoke(input);
+      const aiMessage = new AIMessage(response);
+      return aiMessage.content;
+    }
+    return await this.runnable.invoke(input);
   }
 }

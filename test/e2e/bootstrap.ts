@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import { Ollama } from '@langchain/community/llms/ollama';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { pull } from 'langchain/hub';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 
 import { z } from 'zod';
 import { DynamicTool, DynamicStructuredTool } from '@langchain/core/tools';
@@ -10,9 +11,14 @@ import { DynamicTool, DynamicStructuredTool } from '@langchain/core/tools';
 const bootstrap = async () => {
   const ollama = new Ollama({
     baseUrl: 'http://localhost:11434',
-    model: 'phi3',
+    model: 'phi3:mini',
   });
 
+  const google = new ChatGoogleGenerativeAI({
+    model: 'gemini-2.0-flash',
+    maxOutputTokens: 2048,
+    apiKey: process.env.GOOGLE_API_KEY,
+  });
 
 
   const tools = [
@@ -35,8 +41,13 @@ const bootstrap = async () => {
   ];
 
   container.register('main-llm', {
-    useValue: ollama,
+    useValue: google,
   });
+
+  container.register('chat_model', {
+    useValue: true,
+  });
+
   container.register('tools', {
     useValue: tools,
   });
