@@ -24,9 +24,9 @@ describe('ReduceChain', () => {
   });
 
   it('should contain example document chunks in the template', () => {
-    expect(reduceChain.template).toContain('document: {document}');
+    expect(reduceChain.template).toContain('facts: {facts}');
     expect(reduceChain.template).toContain(
-      'question: Does the document mention {question} Say yes or no::'
+      'question: Does the facts mention {question} Say YES OR NO Only::'
     );
   });
 
@@ -35,7 +35,9 @@ describe('ReduceChain', () => {
   });
 
   it("should end the template with 'yes or no::'", () => {
-    expect(reduceChain.template.trim().endsWith('yes or no::')).toBe(true);
+    expect(reduceChain.template.trim().endsWith('Say YES OR NO Only::')).toBe(
+      true
+    );
   });
 
   describe('chain', () => {

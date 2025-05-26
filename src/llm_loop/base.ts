@@ -24,15 +24,6 @@ export class LLMLoop extends BaseChain {
     };
 
     return this.chain(_input);
-
-    // this.chain(_input).then((result) => {
-    //   console.log('Assertion result:', result);
-    //   return result;
-    // }).catch((error) => {
-    //   console.error('Error in assertion check:', error);
-    //   return false;
-    // })
-    // return false; // Placeholder for assertion check logic
   }
 
   async checkMention(expression: string, context: string): Promise<boolean> {

@@ -26,8 +26,8 @@ describe('MapDoc', () => {
     expect(mapDoc.template).toContain('Summary::');
   });
 
-  it('should include the {question} placeholder in the template', () => {
-    expect(mapDoc.template).toContain('{question}');
+  it('should include the {query} placeholder in the template', () => {
+    expect(mapDoc.template).toContain('{query}');
   });
 
   it("should end the template with 'Summary::'", () => {

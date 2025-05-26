@@ -26,8 +26,8 @@ describe('MapQuery', () => {
     expect(mapQuery.template).toContain('answer>> Diverticulitis diagnosis');
   });
 
-  it('should include the {cql} placeholder in the template', () => {
-    expect(mapQuery.template).toContain('{cql}');
+  it('should include the {expression} placeholder in the template', () => {
+    expect(mapQuery.template).toContain('{expression}');
   });
 
   it("should end the template with 'answer>>'", () => {

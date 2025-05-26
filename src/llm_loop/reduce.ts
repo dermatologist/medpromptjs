@@ -8,5 +8,5 @@ export class ReduceChain extends BaseChain {
     Do not include the facts in the answer.\n
     Say yes if the facts mentions all aspects of the question, else say no.\n
     facts: {facts} \n
-    question: Does the facts mention {question} Say YES OR NO Only:: `;
+    question: Does the facts mention {question} Say YES OR NO Only::`;
 }
