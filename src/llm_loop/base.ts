@@ -17,40 +17,50 @@ export class LLMLoop extends BaseChain {
 
   async checkAssertion(expression: string, context: any): Promise<boolean> {
     let _expression: string = '';
-    let _context: any = undefined;
-    let _content: string = '';
     try {
       // Check if expression is a valid JSON string
       _expression = this.printValues(JSON.parse(expression));
     } catch (error) {
       _expression = expression; // If not, use the expression as is
     }
+
     log.info(`Checking assertion with expression: ${_expression}`);
+    // Initialize context and content
+    let _context: any = undefined;
+    let _content: string = '';
+    try {
+      _context = JSON.parse(context);
+    } catch (error) {
+      _context = context; // If not, use the context as is
+      log.warn(`Context is not a valid JSON string: ${context}`);
+      log.warn(`Using context as a string: ${_context}`);
+    }
     try {
       // Check if context is a valid JSON string
       _context = JSON.parse(context);
-      _context.forEach(
-        (element: {
-          content: { attachment: { data: { value: string } } }[];
-        }) => {
-          _content += atob(element.content[0].attachment.data.value);
-        }
-      );
+      _context.forEach((element: any) => {
+        element.content.forEach((contentItem: any) => {
+          _content += atob(contentItem.attachment.data.value);
+        });
+      });
     } catch (error) {
       _content = context; // If not, use the context as is
+      log.warn(`Context is not a valid JSON : ${context}`);
+      log.warn(`Using context as a string: ${_content}`);
     }
-
     _content = this.findDatesAndConvertToTimeElapsed(
       _content.replace(/(\r\n|\n|\r)/gm, ' ')
     );
+    log.info(`Checking assertion with context: ${_content}`);
     const _input = {
       input: {
         expression: _expression,
         context: _content,
       },
     };
-
-    return this.chain(_input);
+    const result = await this.chain(_input);
+    log.info(`Assertion check result: ${result}`);
+    return result;
   }
 
   async checkMention(expression: string, context: any): Promise<boolean> {
