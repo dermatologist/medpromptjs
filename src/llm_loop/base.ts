@@ -137,7 +137,8 @@ export class LLMLoop extends BaseChain {
       'Named',
     ];
     _eliminate.forEach((element) => {
-      this.string_expression = this.string_expression.replace(element, '');
+      const regex = new RegExp(element, 'g');
+      this.string_expression = this.string_expression.replace(regex, '');
     });
     this.string_expression = this.string_expression.replace(
       /(?:https?|ftp):\/\/[\n\S]+/g,
