@@ -19,7 +19,9 @@ export class LLMLoop extends BaseChain {
     const _input = {
       input: {
         expression: expression,
-        context: context,
+        context: this.findDatesAndConvertToTimeElapsed(
+          this.camelToString(context)
+        ),
       },
     };
 
@@ -36,7 +38,7 @@ export class LLMLoop extends BaseChain {
     return false;
   }
 
-  findDatesAndConvertToTimeElapsed(text: string) {
+  findDatesAndConvertToTimeElapsed(text: string): string {
     // Regular expression to match dates in format of 'mm/dd/yyyy' or 'mm-dd-yyyy'
     const dateRegex = /(\d{1,2}[-/]\d{1,2}[-/]\d{4})/g;
     let matches;
