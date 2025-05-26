@@ -32,7 +32,7 @@
     "start": "dts watch",
     "test": "dts test --verbose --testPathIgnorePatterns=./test/e2e/*",
     "e2e": "dts test --verbose ./test/e2e --detectOpenHandles",
-    "docs": "typedoc --out docs src"
+    "docs": "typedoc --plugin typedoc-plugin-markdown --out docs src"
   },
   "husky": {
     "hooks": {
