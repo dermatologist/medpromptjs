@@ -23,20 +23,19 @@ describe('MapQuery', () => {
     expect(mapQuery.template).toContain('{expression}');
   });
 
-
   describe('chain', () => {
     const SECONDS = 1000;
     jest.setTimeout(90 * SECONDS);
 
-    it('should correctly run the agent with mock data', async () => {
+    it('should correctly run the chain with mock data', async () => {
       const _input = {
-        input: 'DHTI is a framework for GenAI in healthcare.',
+        input: 'Visual foot exam in the last month. Visual foot exam showed active infection.',
         chat_history: [],
       };
 
       // Mocking the chain method to return a predefined result
       const mockResult: any = {
-        output: 'DHTI stands for Digital Health Technology Integration.',
+        output: 'Did the patient have a visual foot exam in the last month? Is there any evidence of active infection?',
       };
       jest.spyOn(mapQuery, 'chain').mockResolvedValueOnce(mockResult);
 

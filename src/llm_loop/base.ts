@@ -240,7 +240,7 @@ export class LLMLoop extends BaseChain {
         return Promise.all(
           textChunks.map((chunk) =>
             this.mapDoc.chain({
-              input: { document: chunk, question: input.input.expression },
+              input: { document: chunk, statements: input.input.expression },
             })
           )
         );
@@ -252,7 +252,27 @@ export class LLMLoop extends BaseChain {
     const sequence = RunnableSequence.from([
       parallelChain,
       async (results: any) => {
-        // results is an array: [{ query: ... }, { documents: [...] }]
+        /*  results is an array: [{ query: ... }, { documents: [...] }]
+{
+    "0": {
+        "input": {
+            "expression": "0 Visual foot exam showed active infection?",
+            "context": "Procedure: The patient underwent a visual foot examination on 26 days ago. to assess skin integrity, circulation, and structural abnormalities.  Findings:   - Skin Condition: No signs of dryness, cracking, or ulceration were observed. No abnormal lesions or discoloration present.   - Nail Health: Toenails appeared intact with no evidence of fungal infection or ingrown nails.   - Circulation: Normal coloration, with no signs of cyanosis or pallor. Capillary refill time within normal limits.   - Edema: No visible swelling in the feet or ankles.   - Deformities: No structural abnormalities such as bunions, hammertoes, or Charcot foot deformities noted.   - Infections: Showed signs of active infection with erythema and swelling.   - Sensation: No visible signs of neuropathy, though further testing may be required to assess sensory deficits.    "
+        },
+        "query": "The text indicates a question about whether a visual foot exam revealed an active infection.\n"
+    },
+    "1": {
+        "input": {
+            "expression": "0 Visual foot exam showed active infection?",
+            "context": "Procedure: The patient underwent a visual foot examination on 26 days ago. to assess skin integrity, circulation, and structural abnormalities.  Findings:   - Skin Condition: No signs of dryness, cracking, or ulceration were observed. No abnormal lesions or discoloration present.   - Nail Health: Toenails appeared intact with no evidence of fungal infection or ingrown nails.   - Circulation: Normal coloration, with no signs of cyanosis or pallor. Capillary refill time within normal limits.   - Edema: No visible swelling in the feet or ankles.   - Deformities: No structural abnormalities such as bunions, hammertoes, or Charcot foot deformities noted.   - Infections: Showed signs of active infection with erythema and swelling.   - Sensation: No visible signs of neuropathy, though further testing may be required to assess sensory deficits.    "
+        },
+        "documents": [
+            "26 days ago, a visual foot examination revealed no dryness, cracking, ulceration, lesions, discoloration, fungal infection, ingrown nails, cyanosis, pallor, edema, bunions, hammertoes, or Charcot foot deformities. Circulation and capillary refill were normal. However, the exam showed signs"
+        ]
+    }
+}
+        */
+        log.info(`Results from parallel chain: ${JSON.stringify(results)}`);
         const query = results[0].query;
         const documents = results[1].documents;
         return this.reduceChain.chain({

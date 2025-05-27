@@ -24,8 +24,8 @@ describe('ReduceChain', () => {
   });
 
 
-  it('should include the {question} placeholder in the template', () => {
-    expect(reduceChain.template).toContain('{question}');
+  it('should include the {query} placeholder in the template', () => {
+    expect(reduceChain.template).toContain('{query}');
   });
 
 
