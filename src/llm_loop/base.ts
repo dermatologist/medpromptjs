@@ -17,40 +17,50 @@ export class LLMLoop extends BaseChain {
 
   async checkAssertion(expression: string, context: any): Promise<boolean> {
     let _expression: string = '';
-    let _context: any = undefined;
-    let _content: string = '';
     try {
       // Check if expression is a valid JSON string
       _expression = this.printValues(JSON.parse(expression));
     } catch (error) {
       _expression = expression; // If not, use the expression as is
     }
+
     log.info(`Checking assertion with expression: ${_expression}`);
+    // Initialize context and content
+    let _context: any = undefined;
+    let _content: string = '';
+    try {
+      _context = JSON.parse(context);
+    } catch (error) {
+      _context = context; // If not, use the context as is
+      log.warn(`Context is not a valid JSON string: ${context}`);
+      log.warn(`Using context as a string: ${_context}`);
+    }
     try {
       // Check if context is a valid JSON string
       _context = JSON.parse(context);
-      _context.forEach(
-        (element: {
-          content: { attachment: { data: { value: string } } }[];
-        }) => {
-          _content += atob(element.content[0].attachment.data.value);
-        }
-      );
+      _context.forEach((element: any) => {
+        element.content.forEach((contentItem: any) => {
+          _content += atob(contentItem.attachment.data.value);
+        });
+      });
     } catch (error) {
       _content = context; // If not, use the context as is
+      log.warn(`Context is not a valid JSON : ${context}`);
+      log.warn(`Using context as a string: ${_content}`);
     }
-
     _content = this.findDatesAndConvertToTimeElapsed(
       _content.replace(/(\r\n|\n|\r)/gm, ' ')
     );
+    log.info(`Checking assertion with context: ${_content}`);
     const _input = {
       input: {
         expression: _expression,
         context: _content,
       },
     };
-
-    return this.chain(_input);
+    const result = await this.chain(_input);
+    log.info(`Assertion check result: ${result}`);
+    return result;
   }
 
   async checkMention(expression: string, context: any): Promise<boolean> {
@@ -102,6 +112,9 @@ export class LLMLoop extends BaseChain {
       'certainly',
       'definitely',
       'indeed',
+      'did have',
+      'showed',
+      'revealed',
     ];
     const lowerStr = str.toLowerCase();
     return positiveKeywords.some((keyword) => lowerStr.includes(keyword));
@@ -139,9 +152,44 @@ export class LLMLoop extends BaseChain {
   }
 
   printValues(obj: any) {
+    log.info(`Processing Rule: ${obj.name} for ${obj.context}`);
+    // For each obj.expression:arg:where
+    if (obj.expression && obj.expression.arg && obj.expression.arg.where) {
+      // for each args in obj.expression.arg.where, extract the nested key called "value"
+      const statements = this.extractObjectsByKey(
+        obj.expression.arg.where,
+        'value'
+      );
+      return statements.join(' ').replace(/,/g, ' ');
+    }
+    // return statements array as a string seperated by space
+    return '';
+  }
+
+  extractObjectsByKey(obj: any, key: string): any[] {
+    const results: any[] = [];
+
+    function traverse(obj: any) {
+      for (const currentKey in obj) {
+        if (obj.hasOwnProperty(currentKey)) {
+          if (currentKey === key) {
+            results.push(obj[currentKey]);
+          }
+          if (typeof obj[currentKey] === 'object' && obj[currentKey] !== null) {
+            traverse(obj[currentKey]);
+          }
+        }
+      }
+    }
+
+    traverse(obj);
+    return results;
+  }
+
+  _printValues(obj: any) {
     for (var key in obj) {
       if (typeof obj[key] === 'object') {
-        this.printValues(obj[key]);
+        this._printValues(obj[key]);
       } else {
         this.string_expression += obj[key] + ' ';
       }
@@ -195,7 +243,7 @@ export class LLMLoop extends BaseChain {
         return Promise.all(
           textChunks.map((chunk) =>
             this.mapDoc.chain({
-              input: { document: chunk, question: input.input.expression },
+              input: { document: chunk, statements: input.input.expression },
             })
           )
         );
@@ -207,13 +255,34 @@ export class LLMLoop extends BaseChain {
     const sequence = RunnableSequence.from([
       parallelChain,
       async (results: any) => {
-        // results is an array: [{ query: ... }, { documents: [...] }]
+        /*  results is an array: [{ query: ... }, { documents: [...] }]
+{
+    "0": {
+        "input": {
+            "expression": "0 Visual foot exam showed active infection?",
+            "context": "Procedure: The patient underwent a visual foot examination on 26 days ago. to assess skin integrity, circulation, and structural abnormalities.  Findings:   - Skin Condition: No signs of dryness, cracking, or ulceration were observed. No abnormal lesions or discoloration present.   - Nail Health: Toenails appeared intact with no evidence of fungal infection or ingrown nails.   - Circulation: Normal coloration, with no signs of cyanosis or pallor. Capillary refill time within normal limits.   - Edema: No visible swelling in the feet or ankles.   - Deformities: No structural abnormalities such as bunions, hammertoes, or Charcot foot deformities noted.   - Infections: Showed signs of active infection with erythema and swelling.   - Sensation: No visible signs of neuropathy, though further testing may be required to assess sensory deficits.    "
+        },
+        "query": "The text indicates a question about whether a visual foot exam revealed an active infection.\n"
+    },
+    "1": {
+        "input": {
+            "expression": "0 Visual foot exam showed active infection?",
+            "context": "Procedure: The patient underwent a visual foot examination on 26 days ago. to assess skin integrity, circulation, and structural abnormalities.  Findings:   - Skin Condition: No signs of dryness, cracking, or ulceration were observed. No abnormal lesions or discoloration present.   - Nail Health: Toenails appeared intact with no evidence of fungal infection or ingrown nails.   - Circulation: Normal coloration, with no signs of cyanosis or pallor. Capillary refill time within normal limits.   - Edema: No visible swelling in the feet or ankles.   - Deformities: No structural abnormalities such as bunions, hammertoes, or Charcot foot deformities noted.   - Infections: Showed signs of active infection with erythema and swelling.   - Sensation: No visible signs of neuropathy, though further testing may be required to assess sensory deficits.    "
+        },
+        "documents": [
+            "26 days ago, a visual foot examination revealed no dryness, cracking, ulceration, lesions, discoloration, fungal infection, ingrown nails, cyanosis, pallor, edema, bunions, hammertoes, or Charcot foot deformities. Circulation and capillary refill were normal. However, the exam showed signs"
+        ]
+    }
+}
+        */
+        log.info(`Results from parallel chain: ${JSON.stringify(results)}`);
+        const expression = results[0].input.expression;
         const query = results[0].query;
         const documents = results[1].documents;
         return this.reduceChain.chain({
           input: {
-            query: query,
             facts: documents,
+            query: query + ' ' + expression,
           },
         });
       },
