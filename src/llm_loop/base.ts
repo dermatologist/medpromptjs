@@ -112,6 +112,9 @@ export class LLMLoop extends BaseChain {
       'certainly',
       'definitely',
       'indeed',
+      'did have',
+      'showed',
+      'revealed',
     ];
     const lowerStr = str.toLowerCase();
     return positiveKeywords.some((keyword) => lowerStr.includes(keyword));
@@ -273,12 +276,13 @@ export class LLMLoop extends BaseChain {
 }
         */
         log.info(`Results from parallel chain: ${JSON.stringify(results)}`);
+        const expression = results[0].input.expression;
         const query = results[0].query;
         const documents = results[1].documents;
         return this.reduceChain.chain({
           input: {
-            query: query,
             facts: documents,
+            query: query + ' ' + expression,
           },
         });
       },
