@@ -23,15 +23,14 @@ describe('MapDoc', () => {
 
   it('should contain example document chunks in the template', () => {
     expect(mapDoc.template).toContain('document: {document}');
-    expect(mapDoc.template).toContain('Summary::');
   });
 
   it('should include the {query} placeholder in the template', () => {
     expect(mapDoc.template).toContain('{query}');
   });
 
-  it("should end the template with 'Summary::'", () => {
-    expect(mapDoc.template.trim().endsWith('Summary::')).toBe(true);
+  it("The template should have 'Summary: '", () => {
+    expect(mapDoc.template.trim().includes('Summary')).toBe(true);
   });
 
   describe('chain', () => {

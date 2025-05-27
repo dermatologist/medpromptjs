@@ -149,9 +149,44 @@ export class LLMLoop extends BaseChain {
   }
 
   printValues(obj: any) {
+    log.info(`Processing Rule: ${obj.name} for ${obj.context}`);
+    // For each obj.expression:arg:where
+    if (obj.expression && obj.expression.arg && obj.expression.arg.where) {
+      // for each args in obj.expression.arg.where, extract the nested key called "value"
+      const statements = this.extractObjectsByKey(
+        obj.expression.arg.where,
+        'value'
+      );
+      return statements.join(' ').replace(/,/g, ' ');
+    }
+    // return statements array as a string seperated by space
+    return '';
+  }
+
+  extractObjectsByKey(obj: any, key: string): any[] {
+    const results: any[] = [];
+
+    function traverse(obj: any) {
+      for (const currentKey in obj) {
+        if (obj.hasOwnProperty(currentKey)) {
+          if (currentKey === key) {
+            results.push(obj[currentKey]);
+          }
+          if (typeof obj[currentKey] === 'object' && obj[currentKey] !== null) {
+            traverse(obj[currentKey]);
+          }
+        }
+      }
+    }
+
+    traverse(obj);
+    return results;
+  }
+
+  _printValues(obj: any) {
     for (var key in obj) {
       if (typeof obj[key] === 'object') {
-        this.printValues(obj[key]);
+        this._printValues(obj[key]);
       } else {
         this.string_expression += obj[key] + ' ';
       }

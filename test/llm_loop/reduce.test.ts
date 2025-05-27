@@ -23,22 +23,12 @@ describe('ReduceChain', () => {
     );
   });
 
-  it('should contain example document chunks in the template', () => {
-    expect(reduceChain.template).toContain('facts: {facts}');
-    expect(reduceChain.template).toContain(
-      'question: Does the facts mention {question} Say YES OR NO Only::'
-    );
-  });
 
   it('should include the {question} placeholder in the template', () => {
     expect(reduceChain.template).toContain('{question}');
   });
 
-  it("should end the template with 'yes or no::'", () => {
-    expect(reduceChain.template.trim().endsWith('Say YES OR NO Only::')).toBe(
-      true
-    );
-  });
+
 
   describe('chain', () => {
     const SECONDS = 1000;

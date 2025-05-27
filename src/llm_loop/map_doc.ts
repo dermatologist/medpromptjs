@@ -8,5 +8,5 @@ export class MapDoc extends BaseChain {
     Summarize the document chunk commenting on: {query} \n
     Do not include absent or negative mentions.\n
     document: {document} \n
-    Summary:: `;
+    Summary: `;
 }

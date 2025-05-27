@@ -54,11 +54,7 @@ describe('LLMLoop', () => {
     expect(result).toBe('Camel Case String');
   });
 
-  it('should print values correctly', () => {
-    const obj = { a: 1, b: { c: 2, d: 3 } };
-    llmLoop.printValues(obj);
-    expect(llmLoop.string_expression).toContain('1 2 3');
-  });
+
 
   it('should eliminate unwanted values', () => {
     const obj = { a: 'true', b: 'false', c: null, d: undefined };

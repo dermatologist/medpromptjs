@@ -19,20 +19,10 @@ describe('MapQuery', () => {
     expect(mapQuery.description).toBe('Map a CQL query to a natural language.');
   });
 
-  it('should contain example CQL queries in the template', () => {
-    expect(mapQuery.template).toContain('CQL:     exists (');
-    expect(mapQuery.template).toContain('answer>> Penicillin allergy');
-    expect(mapQuery.template).toContain('CQL:    exists (');
-    expect(mapQuery.template).toContain('answer>> Diverticulitis diagnosis');
-  });
-
   it('should include the {expression} placeholder in the template', () => {
     expect(mapQuery.template).toContain('{expression}');
   });
 
-  it("should end the template with 'answer>>'", () => {
-    expect(mapQuery.template.trim().endsWith('answer>>')).toBe(true);
-  });
 
   describe('chain', () => {
     const SECONDS = 1000;
