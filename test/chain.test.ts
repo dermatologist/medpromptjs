@@ -9,7 +9,6 @@ describe('BaseChain', () => {
     baseChain = new BaseChain(_container);
   });
 
-
   it('should initialize with default values', () => {
     expect(baseChain.name).toBe('baseChain');
     expect(baseChain.description).toBe('base_chain');
@@ -32,5 +31,4 @@ describe('BaseChain', () => {
     expect(baseChain.template).toBe('This is a test template');
     expect(baseChain.prompt).toBeDefined();
   });
-
 });

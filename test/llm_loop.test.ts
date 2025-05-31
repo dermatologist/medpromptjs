@@ -16,7 +16,6 @@ describe('LLMLoop', () => {
     jest.clearAllMocks();
   });
 
-
   // Add tests for getters and setters
   it('should set and get mapQueryTemplate', () => {
     llmLoop.mapQueryTemplate = 'test-template';
@@ -47,6 +46,3 @@ describe('LLMLoop', () => {
     expect(llmLoop.chat_model).toBe(false);
   });
 });
-
-
-

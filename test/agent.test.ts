@@ -35,5 +35,4 @@ describe('BaseAgent', () => {
     expect(baseAgent.llm).toBeUndefined(); // llm is not set in this test
     expect(baseAgent.chat_model).toBe(false);
   });
-
 });

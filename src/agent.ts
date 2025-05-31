@@ -61,7 +61,8 @@ export class BaseAgent {
     return this._description;
   }
   set description(value: string) {
-    this._description = value === '' ? this.snake_case(this.constructor.name) : value;
+    this._description =
+      value === '' ? this.snake_case(this.constructor.name) : value;
   }
 
   get template(): string {

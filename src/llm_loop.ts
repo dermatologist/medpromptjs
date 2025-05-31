@@ -282,9 +282,9 @@ export class LLMLoop extends BaseChain {
     // Finally reduceChain is called with the results of mapQuery and mapDoc
     // LCEL-based implementation using RunnableSequence, RunnableParallel, and RunnablePassthrough
     const { RunnableSequence, RunnableParallel, RunnablePassthrough } =
-        await import('@langchain/core/runnables');
+      await import('@langchain/core/runnables');
 
-    const mapQuery: BaseChain = new BaseChain(this.container)
+    const mapQuery: BaseChain = new BaseChain(this.container);
     const mapDoc: BaseChain = new BaseChain(this.container);
     const reduceChain: BaseChain = new BaseChain(this.container);
     mapQuery.name = 'MapQuery';
@@ -306,7 +306,10 @@ export class LLMLoop extends BaseChain {
         const textChunks = await this.textSplitter(input.input.context);
         return Promise.all(
           textChunks.map((chunk) =>
-            mapDoc.chain({ document: chunk, statements: input.input.expression })
+            mapDoc.chain({
+              document: chunk,
+              statements: input.input.expression,
+            })
           )
         );
       },
@@ -342,8 +345,8 @@ export class LLMLoop extends BaseChain {
         const query = results[0].query;
         const documents = results[1].documents;
         return reduceChain.chain({
-            facts: documents,
-            query: query + ' ' + expression,
+          facts: documents,
+          query: query + ' ' + expression,
         });
       },
       (result: any) => this.stringToBoolean(result),
