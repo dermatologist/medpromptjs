@@ -13,8 +13,6 @@ const bootstrap = async () => {
     model: 'phi3',
   });
 
-
-
   const tools = [
     new DynamicTool({
       name: 'FOO',

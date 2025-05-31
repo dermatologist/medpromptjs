@@ -20,7 +20,6 @@ const bootstrap = async () => {
     apiKey: process.env.GOOGLE_API_KEY,
   });
 
-
   const tools = [
     new DynamicTool({
       name: 'FOO',
