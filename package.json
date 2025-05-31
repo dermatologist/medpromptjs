@@ -1,6 +1,6 @@
 {
   "name": "medpromptjs",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A library of langchain base classes for building medical applications.",
   "license": "Apache-2.0",
   "author": "Bell Eapen",
@@ -68,7 +68,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.2",
     "@types/supertest": "^6.0.2",
-    "dts-cli": "^2.0.3",
+    "dts-cli": "^2.0.4",
     "google-auth-library": "^9.15.1",
     "husky": "^9.1.7",
     "size-limit": "^11.2.0",
