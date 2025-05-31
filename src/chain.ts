@@ -16,7 +16,6 @@
 
 import { PromptTemplate, ChatPromptTemplate } from '@langchain/core/prompts';
 import { LLM } from '@langchain/core/language_models/llms';
-import type { ToolInterface } from '@langchain/core/tools';
 import mydi from './mydi';
 import {
   RunnablePassthrough,
@@ -26,44 +25,72 @@ import { AIMessage } from '@langchain/core/messages';
 
 export class BaseChain {
   container: any;
-  tools: ToolInterface[];
-  name: string;
-  description: string;
+  private _name: string = '';
+  private _description: string = '';
+  private _template: string = '';
   prompt: any;
   llm: LLM;
-  template: string;
   chat_model: boolean;
   runnable: any;
 
-  constructor(
-    container: any,
-    name: string,
-    description: string,
-    template: string = `
-    Summarize the following text:
-        {input}
-    `
-  ) {
+  constructor(container: any) {
     this.container = container;
-    this.name = name === '' ? this.camelize(this.constructor.name) : name;
-    this.description =
-      description === '' ? this.snake_case(this.constructor.name) : description;
-    this.template = template;
-    this.tools = this.resolve('tools');
     this.llm = this.resolve('main-llm');
     this.chat_model = false;
+    this.initialize();
+  }
+
+  // Getters and setters
+  get name(): string {
+    return this._name;
+  }
+  set name(value: string) {
+    this._name = value === '' ? this.camelize(this.constructor.name) : value;
+  }
+
+  get description(): string {
+    return this._description;
+  }
+  set description(value: string) {
+    this._description =
+      value === '' ? this.snake_case(this.constructor.name) : value;
+  }
+
+  get template(): string {
+    return this._template;
+  }
+  set template(value: string) {
+    this._template = value;
     try {
       this.chat_model = this.resolve('chat_model');
     } catch (e) {}
     if (this.chat_model) {
-      this.prompt = ChatPromptTemplate.fromTemplate(this.template);
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {
-      this.prompt = PromptTemplate.fromTemplate(this.template);
+      this.prompt = PromptTemplate.fromTemplate(this._template);
+    }
+  }
+
+  initialize() {
+    if (this._name === '') {
+      this._name = this.camelize(this.constructor.name);
+    }
+    if (this._description === '') {
+      this._description = this.snake_case(this.constructor.name);
+    }
+    if (this._template === '') {
+      this._template = `{{input}}`;
+    }
+    this.prompt = this.prompt || PromptTemplate.fromTemplate(this._template);
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this._template);
     }
   }
 
   resolve(name: string) {
-    return mydi(this.container, this.name, name);
+    return mydi(this.container, this._name, name);
   }
 
   camelize(str: string) {

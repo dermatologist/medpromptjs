@@ -1,4 +1,4 @@
-import { LLMLoop } from '../../src/llm_loop/base';
+import { LLMLoop } from '../../src/llm_loop';
 import bootstrap from './bootstrap';
 
 jest.setTimeout(60000);
@@ -8,7 +8,7 @@ describe('LLMLoop', () => {
 
   beforeAll(async () => {
     const _container = await bootstrap();
-    llmLoop = new LLMLoop(_container, '', '');
+    llmLoop = new LLMLoop(_container);
   });
 
   it('should check assertion correctly', async () => {
