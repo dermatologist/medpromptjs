@@ -26,11 +26,9 @@ import mydi from './mydi';
 
 export class BaseAgent {
   container: any;
-  tools: ToolInterface[];
-  name: string;
-  prompt: PromptTemplate;
-  llm: LLM;
-  template: string = `
+  private _name: string = '';
+  private _description: string = '';
+  private _template: string = `
         ## Question: {question}
         ## Answer: {answer}
         Given the above question and answer, generate a chain of thought explanation for the answer.
@@ -38,20 +36,58 @@ export class BaseAgent {
         End the chain of though explanation with:
         Therefore, the answer is {answer}.
         `;
+  private _tools: ToolInterface[] = [];
+  prompt: any;
+  llm: LLM;
+  chat_model: boolean;
+  runnable: any;
 
   constructor(container: any) {
     this.container = container;
-    this.name = this.camelize(this.constructor.name);
-    this.tools = this.resolve('tools');
-    this.prompt =
-      this.resolve('prompt') !== ''
-        ? this.resolve('prompt')
-        : PromptTemplate.fromTemplate(this.template);
     this.llm = this.resolve('main-llm');
+    this.chat_model = false;
+  }
+
+  // Getters and setters
+  get name(): string {
+    return this._name;
+  }
+  set name(value: string) {
+    this._name = value === '' ? this.camelize(this.constructor.name) : value;
+  }
+
+  get description(): string {
+    return this._description;
+  }
+  set description(value: string) {
+    this._description = value === '' ? this.snake_case(this.constructor.name) : value;
+  }
+
+  get template(): string {
+    return this._template;
+  }
+  set template(value: string) {
+    this._template = value;
+    try {
+      this.chat_model = this.resolve('chat_model');
+    } catch (e) {}
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this._template);
+    }
+  }
+
+  // Getters and setters for tools
+  get tools(): ToolInterface[] {
+    return this._tools;
+  }
+  set tools(value: ToolInterface[]) {
+    this._tools = value;
   }
 
   resolve(name: string) {
-    return mydi(this.container, this.name, name);
+    return mydi(this.container, this._name, name);
   }
 
   camelize(str: string) {
@@ -73,7 +109,7 @@ export class BaseAgent {
   async run(input: any) {
     const agent = await createStructuredChatAgent({
       llm: this.llm,
-      tools: this.tools,
+      tools: this._tools,
       prompt: this.prompt,
     });
     const agentExecutor = new AgentExecutor({
