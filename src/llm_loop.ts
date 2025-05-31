@@ -6,7 +6,7 @@ const log: Logger<ILogObj> = new Logger();
 export class LLMLoop extends BaseChain {
   // Implement the LLM loop logic here
   stringExpression: string = '';
-  mapQueryTemplate: string = `
+  _mapQueryTemplate: string = `
     You are an assistant that can convert statements to a natural language query as in the example below.\n
 
 
@@ -15,7 +15,7 @@ export class LLMLoop extends BaseChain {
     Statements: {expression}
     query: `;
 
-  mapDocTemplate: string = `
+  _mapDocTemplate: string = `
     You will be given a document and few statements.\n
     Extract facts from the document that are relevant to the statements.\n
     Do not include any irrelevant information or context.\n
@@ -29,7 +29,7 @@ export class LLMLoop extends BaseChain {
     statements: {statements}\n
     facts: `;
 
-  reduceChainTemplate: string = `
+  _reduceChainTemplate: string = `
     Say yes if the facts mentions all aspects of the query, else say no.\n
 
     Example:
@@ -48,6 +48,26 @@ export class LLMLoop extends BaseChain {
     facts: {facts} \n
     query: {query}\n
     answer: `;
+
+  // Add getters and setters for the templates if needed
+  get mapQueryTemplate(): string {
+    return this._mapQueryTemplate;
+  }
+  set mapQueryTemplate(template: string) {
+    this._mapQueryTemplate = template;
+  }
+  get mapDocTemplate(): string {
+    return this._mapDocTemplate;
+  }
+  set mapDocTemplate(template: string) {
+    this._mapDocTemplate = template;
+  }
+  get reduceChainTemplate(): string {
+    return this._reduceChainTemplate;
+  }
+  set reduceChainTemplate(template: string) {
+    this._reduceChainTemplate = template;
+  }
 
   async checkAssertion(expression: string, context: any): Promise<boolean> {
     let _expression: string = '';
@@ -269,13 +289,13 @@ export class LLMLoop extends BaseChain {
     const reduceChain: BaseChain = new BaseChain(this.container);
     mapQuery.name = 'MapQuery';
     mapQuery.description = 'Map the expression to a natural language query.';
-    mapQuery.template = this.mapQueryTemplate;
+    mapQuery.template = this._mapQueryTemplate;
     mapDoc.name = 'MapDoc';
     mapDoc.description = 'Map the document to a set of facts.';
-    mapDoc.template = this.mapDocTemplate;
+    mapDoc.template = this._mapDocTemplate;
     reduceChain.name = 'ReduceChain';
     reduceChain.description = 'Reduce a set of documents to binary answer.';
-    reduceChain.template = this.reduceChainTemplate;
+    reduceChain.template = this._reduceChainTemplate;
     const mapQueryChain = RunnablePassthrough.assign({
       query: async (input: any) =>
         mapQuery.chain({ expression: input.input.expression }),
