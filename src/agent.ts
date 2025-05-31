@@ -46,6 +46,7 @@ export class BaseAgent {
     this.container = container;
     this.llm = this.resolve('main-llm');
     this.chat_model = false;
+    this.initialize();
   }
 
   // Getters and setters
@@ -84,6 +85,24 @@ export class BaseAgent {
   }
   set tools(value: ToolInterface[]) {
     this._tools = value;
+  }
+
+  initialize() {
+    if (this._name === '') {
+      this._name = this.camelize(this.constructor.name);
+    }
+    if (this._description === '') {
+      this._description = this.snake_case(this.constructor.name);
+    }
+    if (this._template === '') {
+      this._template = `{{input}}`;
+    }
+    this.prompt = this.prompt || PromptTemplate.fromTemplate(this._template);
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this._template);
+    }
   }
 
   resolve(name: string) {
