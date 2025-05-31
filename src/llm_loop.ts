@@ -264,8 +264,8 @@ export class LLMLoop extends BaseChain {
     const { RunnableSequence, RunnableParallel, RunnablePassthrough } =
         await import('@langchain/core/runnables');
 
-      const mapQuery: BaseChain = new BaseChain(this.container)
-      const mapDoc: BaseChain = new BaseChain(this.container);
+    const mapQuery: BaseChain = new BaseChain(this.container)
+    const mapDoc: BaseChain = new BaseChain(this.container);
     const reduceChain: BaseChain = new BaseChain(this.container);
     mapQuery.name = 'MapQuery';
     mapQuery.description = 'Map the expression to a natural language query.';
