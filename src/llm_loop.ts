@@ -278,9 +278,7 @@ export class LLMLoop extends BaseChain {
     reduceChain.template = this.reduceChainTemplate;
     const mapQueryChain = RunnablePassthrough.assign({
       query: async (input: any) =>
-        mapQuery.chain({
-          input: { expression: input.input.expression },
-        }),
+        mapQuery.chain({ expression: input.input.expression }),
     });
 
     const mapDocChain = RunnablePassthrough.assign({
@@ -288,9 +286,7 @@ export class LLMLoop extends BaseChain {
         const textChunks = await this.textSplitter(input.input.context);
         return Promise.all(
           textChunks.map((chunk) =>
-            mapDoc.chain({
-              input: { document: chunk, statements: input.input.expression },
-            })
+            mapDoc.chain({ document: chunk, statements: input.input.expression })
           )
         );
       },
@@ -326,10 +322,8 @@ export class LLMLoop extends BaseChain {
         const query = results[0].query;
         const documents = results[1].documents;
         return reduceChain.chain({
-          input: {
             facts: documents,
             query: query + ' ' + expression,
-          },
         });
       },
       (result: any) => this.stringToBoolean(result),
