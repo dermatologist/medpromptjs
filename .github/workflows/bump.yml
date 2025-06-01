@@ -28,7 +28,7 @@ jobs:
       - name: "Setup Node.js"
         uses: "actions/setup-node@v4.4.0"
         with:
-          node-version: 12
+          node-version: 18
       - name: "Automated Version Bump"
         uses: "dermatologist/gh-action-bump-version@beapen-1"
         with:
