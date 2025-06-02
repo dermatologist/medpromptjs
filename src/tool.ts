@@ -18,6 +18,7 @@ import { DynamicStructuredTool } from 'langchain/tools';
 import mydi from './mydi';
 
 export class BaseTool extends DynamicStructuredTool {
+  /** @hidden */
   container: any;
   name: string;
   description: string;
@@ -64,5 +65,15 @@ export class BaseTool extends DynamicStructuredTool {
         return index === 0 ? word.toLowerCase() : '_' + word.toLowerCase();
       })
       .replace(/\s+/g, '');
+  }
+
+  /**
+   * @param input - The input to process in batch.
+   * @param config - The configuration for the batch.
+   * @returns A promise resolving to an array of results.
+   */
+  async _batchWithConfig(input: any, config: any): Promise<any[]> {
+    // Call the parent implementation or provide your own
+    return super._batchWithConfig(input, config);
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "medpromptjs",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A library of langchain base classes for building medical applications.",
   "license": "Apache-2.0",
   "author": "Bell Eapen",
@@ -32,7 +32,7 @@
     "start": "dts watch",
     "test": "dts test --verbose --testPathIgnorePatterns=./test/e2e/*",
     "e2e": "dts test --verbose ./test/e2e --detectOpenHandles",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --out docs src"
+    "docs": "typedoc --exclude src/tool.ts --html docs src"
   },
   "husky": {
     "hooks": {
@@ -76,7 +76,6 @@
     "ts-mockito": "^2.6.1",
     "tslib": "^2.6.2",
     "typedoc": "^0.28.5",
-    "typedoc-plugin-markdown": "^4.6.3",
     "typescript": "^5.3.3"
   },
   "dependencies": {
