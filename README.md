@@ -1,6 +1,6 @@
 # medpromptjs
 
-A set of base classes for making GenAI application development easy.
+A set of base classes for making GenAI application development easy. Implements the [LLM-in-the-Loop CQL execution on unstructured data](https://nuchange.ca/2025/06/v-llm-in-the-loop-cql-execution-with-unstructured-data-and-fhir-terminology-support.html).
 
 [![npm version](https://badge.fury.io/js/medpromptjs.svg)](https://www.npmjs.com/package/medpromptjs)
 [![npm](https://img.shields.io/npm/dt/medpromptjs)](https://www.npmjs.com/package/medpromptjs)
@@ -27,4 +27,4 @@ If you find this project useful, give us a star. It helps others discover the pr
 
 ## Contributers
 * [Bell Eapen](https://nuchange.ca) | [![Twitter Follow](https://img.shields.io/twitter/follow/beapen?style=social)](https://twitter.com/beapen)
-* [My Blog post](https://nuchange.ca/2023/12/medprompt-how-to-architect-llm-solutions-for-healthcare.html)
+* [My Blog post](https://nuchange.ca/2025/06/v-llm-in-the-loop-cql-execution-with-unstructured-data-and-fhir-terminology-support.html)

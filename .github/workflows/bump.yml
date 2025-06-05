@@ -33,3 +33,4 @@ jobs:
           patch-wording:  'patch,fixes'     # Providing patch-wording will override commits
                                             # defaulting to a patch bump.
           rc-wording:     'RELEASE,alpha'
+          tag-prefix:    'v' #Prefix avoids conflict with git-flow tagging
