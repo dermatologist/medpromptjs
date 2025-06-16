@@ -68,7 +68,7 @@
     "@types/express": "^5.0.2",
     "@types/supertest": "^6.0.2",
     "dts-cli": "^2.0.4",
-    "google-auth-library": "^9.15.1",
+    "google-auth-library": "^10.1.0",
     "husky": "^9.1.7",
     "size-limit": "^11.2.0",
     "supertest": "^7.1.1",
