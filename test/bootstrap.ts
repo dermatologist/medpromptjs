@@ -28,7 +28,7 @@ const bootstrap = async () => {
     new DynamicStructuredTool({
       name: 'random-number-generator',
       description: 'generates a random number between two input numbers',
-      schema: schema,
+      schema: schema as z.ZodTypeAny,
       func: async ({ low, high }) =>
         (Math.random() * (high - low) + low).toString(), // Outputs still must be strings
     }),
