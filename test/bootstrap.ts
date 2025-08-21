@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { Ollama } from '@langchain/community/llms/ollama';
+import { Ollama } from '@langchain/ollama';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { pull } from 'langchain/hub';
 
@@ -13,6 +13,11 @@ const bootstrap = async () => {
     model: 'phi3',
   });
 
+  const schema = z.object({
+    low: z.number().describe('The lower bound of the generated number'),
+    high: z.number().describe('The upper bound of the generated number'),
+  });
+
   const tools = [
     new DynamicTool({
       name: 'FOO',
@@ -23,10 +28,7 @@ const bootstrap = async () => {
     new DynamicStructuredTool({
       name: 'random-number-generator',
       description: 'generates a random number between two input numbers',
-      schema: z.object({
-        low: z.number().describe('The lower bound of the generated number'),
-        high: z.number().describe('The upper bound of the generated number'),
-      }),
+      schema: schema,
       func: async ({ low, high }) =>
         (Math.random() * (high - low) + low).toString(), // Outputs still must be strings
     }),
