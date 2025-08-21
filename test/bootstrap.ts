@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { Ollama } from '@langchain/community/llms/ollama';
+import { Ollama } from '@langchain/ollama';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { pull } from 'langchain/hub';
 
