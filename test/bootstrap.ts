@@ -13,11 +13,6 @@ const bootstrap = async () => {
     model: 'phi3',
   });
 
-  const schema = z.object({
-    low: z.number().describe('The lower bound of the generated number'),
-    high: z.number().describe('The upper bound of the generated number'),
-  });
-
   const tools = [
     new DynamicTool({
       name: 'FOO',
@@ -28,7 +23,10 @@ const bootstrap = async () => {
     new DynamicStructuredTool({
       name: 'random-number-generator',
       description: 'generates a random number between two input numbers',
-      schema: schema as z.ZodTypeAny,
+      schema: z.object({
+        low: z.number().describe('The lower bound of the generated number'),
+        high: z.number().describe('The upper bound of the generated number'),
+      }),
       func: async ({ low, high }) =>
         (Math.random() * (high - low) + low).toString(), // Outputs still must be strings
     }),
