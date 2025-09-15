@@ -87,6 +87,6 @@
     "reflect-metadata": "^0.2",
     "tslog": "^4.9",
     "tsyringe": "^4.10",
-    "zod": "3.25.67"
+    "zod": "4.1.8"
   }
 }
