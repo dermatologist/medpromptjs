@@ -29,7 +29,7 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test --verbose --testPathIgnorePatterns=./test/e2e/*",
+    "test": "dts test --coverage --verbose --testPathIgnorePatterns=./test/e2e/*",
     "e2e": "dts test --verbose ./test/e2e --detectOpenHandles",
     "docs": "typedoc --exclude src/tool.ts --html docs src"
   },
@@ -68,7 +68,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.2",
     "@types/supertest": "^6.0.2",
-    "dts-cli": "^2.0.4",
+    "dts-cli": "^2.0.5",
     "google-auth-library": "^10.1.0",
     "husky": "^9.1.7",
     "size-limit": "^11.2.0",
