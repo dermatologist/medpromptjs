@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - master
+      - main
       - develop
   pull_request:
     branches:
       - master
+      - main
       - develop
 
 jobs:
@@ -40,6 +42,11 @@ jobs:
         run: npm test
         env:
           CI: true
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: dermatologist/medpromptjs
 
       - name: Build
         run: npm run build
