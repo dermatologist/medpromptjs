@@ -81,12 +81,12 @@
   "dependencies": {
     "@langchain/community": "^0.3",
     "cors": "^2.8",
-    "dotenv": "^17",
+    "dotenv": "^16.4",
     "express": "^5.1",
     "langchain": "^0.3",
     "reflect-metadata": "^0.2",
     "tslog": "^4.9",
     "tsyringe": "^4.10",
-    "zod": "3.25.67"
+    "zod": "^3.25"
   }
 }
