@@ -62,7 +62,7 @@
   ],
   "devDependencies": {
     "@langchain/google-genai": "^0.2",
-    "@langchain/ollama": "^0.2",
+    "@langchain/ollama": "^1.0",
     "@size-limit/preset-small-lib": "^11.0.1",
     "@tsconfig/recommended": "^1.0.3",
     "@types/cors": "^2.8.17",
