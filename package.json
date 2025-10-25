@@ -81,7 +81,7 @@
   "dependencies": {
     "@langchain/community": "^0.3",
     "cors": "^2.8",
-    "dotenv": "^16.4",
+    "dotenv": "^17.1",
     "express": "^5.1",
     "langchain": "^0.3",
     "reflect-metadata": "^0.2",
