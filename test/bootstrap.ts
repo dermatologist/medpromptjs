@@ -1,16 +1,12 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { Ollama } from '@langchain/ollama';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { pull } from 'langchain/hub';
-
+import { FakeListChatModel } from '@langchain/core/utils/testing';
 import { z } from 'zod';
 import { DynamicTool, DynamicStructuredTool } from '@langchain/core/tools';
 
 const bootstrap = async () => {
-  const ollama = new Ollama({
-    baseUrl: 'http://localhost:11434',
-    model: 'phi3',
+  const fakeLLM = new FakeListChatModel({
+    responses: ["I'll callback later.", "You 'console' them!"],
   });
 
   const tools = [
@@ -20,20 +16,20 @@ const bootstrap = async () => {
         'call this to get the value of foo. input should be an empty string.',
       func: async () => 'baz',
     }),
-    new DynamicStructuredTool({
-      name: 'random-number-generator',
-      description: 'generates a random number between two input numbers',
-      schema: z.object({
-        low: z.number().describe('The lower bound of the generated number'),
-        high: z.number().describe('The upper bound of the generated number'),
-      }),
-      func: async ({ low, high }) =>
-        (Math.random() * (high - low) + low).toString(), // Outputs still must be strings
-    }),
+    // new DynamicStructuredTool({
+    //   name: 'random-number-generator',
+    //   description: 'generates a random number between two input numbers',
+    //   schema: z.object({
+    //     low: z.number().describe('The lower bound of the generated number'),
+    //     high: z.number().describe('The upper bound of the generated number'),
+    //   }),
+    //   func: async (args: { low: number; high: number }) =>
+    //     (Math.random() * (args.high - args.low) + args.low).toString(), // Outputs still must be strings
+    // }),
   ];
 
   container.register('main-llm', {
-    useValue: ollama,
+    useValue: fakeLLM,
   });
   container.register('tools', {
     useValue: tools,
