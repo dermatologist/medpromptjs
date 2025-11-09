@@ -79,18 +79,26 @@ export const ConversationContainer: React.FC = () => {
 
       <MessageInput onSubmit={handleSubmit} disabled={loading} />
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <button
           onClick={handleClear}
           disabled={loading || messages.length === 0}
           style={{
             padding: '10px 20px',
             fontSize: '14px',
-            backgroundColor: loading || messages.length === 0 ? '#ccc' : '#f44336',
+            backgroundColor:
+              loading || messages.length === 0 ? '#ccc' : '#f44336',
             color: '#fff',
             border: 'none',
             borderRadius: '3px',
-            cursor: loading || messages.length === 0 ? 'not-allowed' : 'pointer',
+            cursor:
+              loading || messages.length === 0 ? 'not-allowed' : 'pointer',
           }}
         >
           Clear Conversation

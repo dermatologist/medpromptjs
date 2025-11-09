@@ -47,7 +47,11 @@ export const useDhti = (): UseDhtiReturn => {
       );
 
       // Assuming the response contains a card or cards
-      if (response.data && response.data.cards && response.data.cards.length > 0) {
+      if (
+        response.data &&
+        response.data.cards &&
+        response.data.cards.length > 0
+      ) {
         return CDSHookCard.from(response.data.cards[0]);
       } else if (response.data && response.data.summary) {
         // Handle case where response is directly a card (must have summary property)
@@ -56,7 +60,10 @@ export const useDhti = (): UseDhtiReturn => {
 
       return null;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to submit message';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        'Failed to submit message';
       setError(errorMessage);
       return null;
     } finally {

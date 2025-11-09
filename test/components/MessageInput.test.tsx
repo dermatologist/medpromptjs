@@ -8,7 +8,9 @@ describe('MessageInput', () => {
     const mockOnSubmit = jest.fn();
     render(<MessageInput onSubmit={mockOnSubmit} />);
 
-    expect(screen.getByPlaceholderText(/Type your message/i)).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(/Type your message/i)
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Send/i })).toBeInTheDocument();
   });
 

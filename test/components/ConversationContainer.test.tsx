@@ -23,7 +23,9 @@ describe('ConversationContainer', () => {
 
   it('should render the conversation container', () => {
     render(<ConversationContainer />);
-    expect(screen.getByText(/Healthcare Conversational Interface/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Healthcare Conversational Interface/i)
+    ).toBeInTheDocument();
   });
 
   it('should render service input with default value', () => {
@@ -34,9 +36,13 @@ describe('ConversationContainer', () => {
 
   it('should render message input and clear button', () => {
     render(<ConversationContainer />);
-    expect(screen.getByPlaceholderText(/Type your message/i)).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(/Type your message/i)
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Send/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Clear Conversation/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Clear Conversation/i })
+    ).toBeInTheDocument();
   });
 
   it('should handle message submission', async () => {
@@ -55,7 +61,10 @@ describe('ConversationContainer', () => {
     fireEvent.click(button);
 
     await waitFor(() => {
-      expect(mockSubmitMessage).toHaveBeenCalledWith('Hello', 'dhti_elixir_template');
+      expect(mockSubmitMessage).toHaveBeenCalledWith(
+        'Hello',
+        'dhti_elixir_template'
+      );
     });
 
     await waitFor(() => {
@@ -108,7 +117,9 @@ describe('ConversationContainer', () => {
     });
 
     // Clear conversation
-    const clearButton = screen.getByRole('button', { name: /Clear Conversation/i });
+    const clearButton = screen.getByRole('button', {
+      name: /Clear Conversation/i,
+    });
     fireEvent.click(clearButton);
 
     await waitFor(() => {
@@ -153,7 +164,9 @@ describe('ConversationContainer', () => {
 
   it('should disable clear button when no messages', () => {
     render(<ConversationContainer />);
-    const clearButton = screen.getByRole('button', { name: /Clear Conversation/i });
+    const clearButton = screen.getByRole('button', {
+      name: /Clear Conversation/i,
+    });
     expect(clearButton).toBeDisabled();
   });
 

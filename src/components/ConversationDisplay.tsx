@@ -44,7 +44,9 @@ export const ConversationDisplay: React.FC<ConversationDisplayProps> = ({
               borderRadius: '5px',
             }}
           >
-            <div style={{ fontSize: '12px', color: '#666', marginBottom: '5px' }}>
+            <div
+              style={{ fontSize: '12px', color: '#666', marginBottom: '5px' }}
+            >
               <strong>{message.type === 'user' ? 'You' : 'System'}</strong>{' '}
               <span>{message.timestamp.toLocaleTimeString()}</span>
             </div>
@@ -84,7 +86,13 @@ export const ConversationDisplay: React.FC<ConversationDisplayProps> = ({
                   </div>
                 )}
                 {message.card.source && (
-                  <div style={{ fontSize: '12px', marginTop: '5px', color: '#666' }}>
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      marginTop: '5px',
+                      color: '#666',
+                    }}
+                  >
                     Source: {message.card.source.label}
                     {message.card.source.url && (
                       <a

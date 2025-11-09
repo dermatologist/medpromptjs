@@ -1,7 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ConversationDisplay, Message } from '../../src/components/ConversationDisplay';
+import {
+  ConversationDisplay,
+  Message,
+} from '../../src/components/ConversationDisplay';
 import { CDSHookCard } from '../../src/models/card';
 
 describe('ConversationDisplay', () => {

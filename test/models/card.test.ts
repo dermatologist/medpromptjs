@@ -101,8 +101,14 @@ describe('CDSHookCard', () => {
 
   it('should handle all indicator types', () => {
     const infoCard = new CDSHookCard({ summary: 'Info', indicator: 'info' });
-    const warningCard = new CDSHookCard({ summary: 'Warning', indicator: 'warning' });
-    const hardStopCard = new CDSHookCard({ summary: 'Hard Stop', indicator: 'hard-stop' });
+    const warningCard = new CDSHookCard({
+      summary: 'Warning',
+      indicator: 'warning',
+    });
+    const hardStopCard = new CDSHookCard({
+      summary: 'Hard Stop',
+      indicator: 'hard-stop',
+    });
 
     expect(infoCard.indicator).toBe('info');
     expect(warningCard.indicator).toBe('warning');

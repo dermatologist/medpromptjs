@@ -9,7 +9,9 @@ describe('ServiceInput', () => {
     render(<ServiceInput service="test_service" onChange={mockOnChange} />);
 
     expect(screen.getByLabelText(/Service:/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/dhti_elixir_template/i)).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(/dhti_elixir_template/i)
+    ).toBeInTheDocument();
   });
 
   it('should display the current service value', () => {
@@ -32,7 +34,13 @@ describe('ServiceInput', () => {
 
   it('should be disabled when disabled prop is true', () => {
     const mockOnChange = jest.fn();
-    render(<ServiceInput service="test_service" onChange={mockOnChange} disabled={true} />);
+    render(
+      <ServiceInput
+        service="test_service"
+        onChange={mockOnChange}
+        disabled={true}
+      />
+    );
 
     const input = screen.getByLabelText(/Service:/i);
     expect(input).toBeDisabled();
