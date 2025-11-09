@@ -46,7 +46,9 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "setupFiles": ["<rootDir>/test/jest.setup.js"]
+    "setupFiles": [
+      "<rootDir>/test/jest.setup.js"
+    ]
   },
   "engines": {
     "node": ">=12"
