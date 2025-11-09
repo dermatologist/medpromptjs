@@ -61,8 +61,6 @@
     }
   ],
   "devDependencies": {
-    "@langchain/google-genai": "^0.2",
-    "@langchain/ollama": "^0.2",
     "@size-limit/preset-small-lib": "^11.0.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -86,13 +84,13 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@langchain/community": "^0.3",
-    "@langchain/core": "^1.0.3",
+    "@langchain/community": "*",
+    "@langchain/core": "^1.0",
     "axios": "^1.13.2",
     "cors": "^2.8",
-    "dotenv": "^17.1",
+    "dotenv": "*",
     "express": "^5.1",
-    "langchain": "^0.3",
+    "langchain": "^1.0",
     "reflect-metadata": "^0.2",
     "tslog": "^4.9",
     "tsyringe": "^4.10",

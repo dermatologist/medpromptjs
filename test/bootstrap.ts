@@ -1,16 +1,12 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { Ollama } from '@langchain/ollama';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { pull } from 'langchain/hub';
-
+import { FakeListChatModel } from '@langchain/core/utils/testing';
 import { z } from 'zod';
 import { DynamicTool, DynamicStructuredTool } from '@langchain/core/tools';
 
 const bootstrap = async () => {
-  const ollama = new Ollama({
-    baseUrl: 'http://localhost:11434',
-    model: 'phi3',
+  const fakeLLM = new FakeListChatModel({
+    responses: ["I'll callback later.", "You 'console' them!"],
   });
 
   const tools = [
@@ -33,7 +29,7 @@ const bootstrap = async () => {
   ];
 
   container.register('main-llm', {
-    useValue: ollama,
+    useValue: fakeLLM,
   });
   container.register('tools', {
     useValue: tools,
