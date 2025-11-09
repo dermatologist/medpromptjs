@@ -16,16 +16,16 @@ const bootstrap = async () => {
         'call this to get the value of foo. input should be an empty string.',
       func: async () => 'baz',
     }),
-    new DynamicStructuredTool({
-      name: 'random-number-generator',
-      description: 'generates a random number between two input numbers',
-      schema: z.object({
-        low: z.number().describe('The lower bound of the generated number'),
-        high: z.number().describe('The upper bound of the generated number'),
-      }),
-      func: async (args: { low: number; high: number }) =>
-        (Math.random() * (args.high - args.low) + args.low).toString(), // Outputs still must be strings
-    }),
+    // new DynamicStructuredTool({
+    //   name: 'random-number-generator',
+    //   description: 'generates a random number between two input numbers',
+    //   schema: z.object({
+    //     low: z.number().describe('The lower bound of the generated number'),
+    //     high: z.number().describe('The upper bound of the generated number'),
+    //   }),
+    //   func: async (args: { low: number; high: number }) =>
+    //     (Math.random() * (args.high - args.low) + args.low).toString(), // Outputs still must be strings
+    // }),
   ];
 
   container.register('main-llm', {
