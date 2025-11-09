@@ -45,7 +45,8 @@
     "trailingComma": "es5"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFiles": ["<rootDir>/test/jest.setup.js"]
   },
   "engines": {
     "node": ">=12"
@@ -84,13 +85,12 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@langchain/community": "*",
-    "@langchain/core": "^1.0",
+    "@langchain/core": "^0.3",
     "axios": "^1.13.2",
     "cors": "^2.8",
     "dotenv": "*",
     "express": "^5.1",
-    "langchain": "^1.0",
+    "langchain": "^0.3",
     "reflect-metadata": "^0.2",
     "tslog": "^4.9",
     "tsyringe": "^4.10",
