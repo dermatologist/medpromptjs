@@ -38,7 +38,7 @@ export const useDhti = (): UseDhtiReturn => {
       };
 
       const response = await axios.post(
-        `${process.env.DHTI_ELIXIR_BASE}/langserve/${service}/cds-services/dhti-service`,
+        `${process.env.DHTI_ELIXIR_BASE || ''}/langserve/${service}/cds-services/dhti-service`,
         {
           input: _request,
           config: {},

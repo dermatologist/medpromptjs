@@ -23,8 +23,8 @@ const bootstrap = async () => {
         low: z.number().describe('The lower bound of the generated number'),
         high: z.number().describe('The upper bound of the generated number'),
       }),
-      func: async ({ low, high }) =>
-        (Math.random() * (high - low) + low).toString(), // Outputs still must be strings
+      func: async (args: { low: number; high: number }) =>
+        (Math.random() * (args.high - args.low) + args.low).toString(), // Outputs still must be strings
     }),
   ];
 
