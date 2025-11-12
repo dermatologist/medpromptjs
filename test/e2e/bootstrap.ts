@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { FakeListChatModel } from "@langchain/core/utils/testing";
+import { FakeListChatModel } from '@langchain/core/utils/testing';
 import { DynamicTool } from '@langchain/core/tools';
 
 const bootstrap = async () => {
