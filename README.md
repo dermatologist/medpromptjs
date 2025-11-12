@@ -5,6 +5,7 @@ A set of base classes for making GenAI application development easy. Implements 
 [![npm version](https://badge.fury.io/js/medpromptjs.svg)](https://www.npmjs.com/package/medpromptjs)
 [![npm](https://img.shields.io/npm/dt/medpromptjs)](https://www.npmjs.com/package/medpromptjs)
 [![Build](https://github.com/dermatologist/medpromptjs/workflows/CI/badge.svg)](https://nuchange.ca)
+[![codecov](https://codecov.io/gh/dermatologist/medpromptjs/branch/develop/graph/badge.svg)](https://codecov.io/gh/dermatologist/medpromptjs)
 [![Known Vulnerabilities](https://snyk.io/test/github/dermatologist/medpromptjs/badge.svg)](https://www.npmjs.com/package/medpromptjs)
 [![Documentation](https://badgen.net/badge/icon/documentation?icon=libraries&label)](https://dermatologist.github.io/medpromptjs/)
 

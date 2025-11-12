@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - master
+      - main
       - develop
   pull_request:
     branches:
       - master
+      - main
       - develop
 
 jobs:
@@ -16,12 +18,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Begin CI...
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Use Node 18
-        uses: actions/setup-node@v4.4.0
+      - name: Use Node 20
+        uses: actions/setup-node@v6.0.0
         with:
-          node-version: 18.x
+          node-version: 20.x
 
       - name: Use cached node_modules
         uses: actions/cache@v4
@@ -40,6 +42,11 @@ jobs:
         run: npm test
         env:
           CI: true
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: dermatologist/medpromptjs
 
       - name: Build
         run: npm run build
