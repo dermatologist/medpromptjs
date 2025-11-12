@@ -77,7 +77,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@langchain/community": "^0.3",
+    "@langchain/community": "^1.0",
     "@langchain/core": "^0.3",
     "cors": "^2.8",
     "dotenv": "^16",
