@@ -1,12 +1,15 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { FakeLLM } from 'langchain/llms/fake';
+import { FakeListChatModel } from "@langchain/core/utils/testing";
 import { DynamicTool } from '@langchain/core/tools';
 
 const bootstrap = async () => {
 
-  const llm = new FakeLLM({
-    responses: ['Hello, this is a fake response!', 'This is another fake response!'],
+  const llm = new FakeListChatModel({
+    responses: [
+      'Hello, this is a fake response!',
+      'This is another fake response!',
+    ],
   });
 
   const tools = [
