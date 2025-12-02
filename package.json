@@ -24,11 +24,11 @@
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "dts build",
+    "build": "dts build --target node",
     "lint": "dts lint --fix",
-    "prepare": "dts build",
+    "prepare": "dts build --target node",
     "size": "size-limit",
-    "start": "dts watch",
+    "start": "dts watch --target node",
     "test": "dts test --coverage --verbose --testPathIgnorePatterns=./test/e2e/*",
     "e2e": "dts test --verbose ./test/e2e --detectOpenHandles",
     "docs": "typedoc --exclude src/tool.ts --html docs src"
@@ -48,7 +48,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "size-limit": [
     {
