@@ -124,4 +124,8 @@ export class BaseChain {
     }
     return await this.runnable.invoke(input);
   }
+
+  async invoke(input: any) {
+    return this.chain(input);
+  }
 }
