@@ -97,7 +97,7 @@ export class BaseEmbedding extends Embeddings {
 
     if (!('embeddings' in respJson)) {
       throw new Error(
-        `API response missing 'embeddings' key: ${JSON.stringify(respJson)}`
+        `API response missing 'embeddings' key. Received keys: ${Object.keys(respJson).join(', ')}`
       );
     }
 
