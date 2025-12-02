@@ -4,7 +4,6 @@ import { FakeListChatModel } from '@langchain/core/utils/testing';
 import { DynamicTool } from '@langchain/core/tools';
 
 const bootstrap = async () => {
-
   const llm = new FakeListChatModel({
     responses: [
       'Hello, this is a fake response!',
