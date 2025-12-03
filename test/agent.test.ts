@@ -32,7 +32,7 @@ describe('BaseAgent', () => {
   it('should resolve dependencies using mydi', () => {
     baseAgent.resolve('test-llm');
     expect(mydi).toHaveBeenCalledWith(mockContainer, 'baseAgent', 'test-llm');
-    expect(baseAgent.llm).toBeUndefined(); // llm is not set in this test
+    expect(baseAgent.llm).toBeNull(); // llm is not set in this test
     expect(baseAgent.chat_model).toBe(false);
   });
 });

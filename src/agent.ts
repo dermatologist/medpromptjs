@@ -106,8 +106,8 @@ export class BaseAgent {
     }
   }
 
-  resolve(name: string) {
-    return mydi(this.container, this._name, name);
+  resolve(name: string, defaultValue: any = null): any {
+    return mydi(this.container, this._name, name) || defaultValue;
   }
 
   camelize(str: string) {

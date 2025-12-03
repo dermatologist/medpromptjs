@@ -42,7 +42,7 @@ describe('LLMLoop', () => {
   it('should resolve dependencies using mydi', () => {
     llmLoop.resolve('test-llm');
     expect(mydi).toHaveBeenCalledWith(mockContainer, 'lLMLoop', 'test-llm');
-    expect(llmLoop.llm).toBeUndefined(); // llm is not set in this test
+    expect(llmLoop.llm).toBeNull(); // llm is not set in this test
     expect(llmLoop.chat_model).toBe(false);
   });
 });
