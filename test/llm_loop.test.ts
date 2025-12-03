@@ -35,7 +35,7 @@ describe('LLMLoop', () => {
   it('should initialize with default values', () => {
     expect(llmLoop.name).toBe('lLMLoop');
     expect(llmLoop.description).toBe('l_l_m_loop');
-    expect(llmLoop.template).toBe('{{input}}');
+    expect(llmLoop.template).toBe('{input}');
     expect(llmLoop.chat_model).toBe(false);
   });
 

@@ -44,9 +44,10 @@ export class BaseAgent {
 
   constructor(container: any) {
     this.container = container;
-    this.llm = this.resolve('main-llm');
-    this.chat_model = false;
     this.initialize();
+    this.llm = this.resolve('main-llm');
+    this.template = this.resolve('template', '{input}');
+    this.chat_model = false;
   }
 
   // Getters and setters
@@ -94,9 +95,6 @@ export class BaseAgent {
     }
     if (this._description === '') {
       this._description = this.snake_case(this.constructor.name);
-    }
-    if (this._template === '') {
-      this._template = `{{input}}`;
     }
     this.prompt = this.prompt || PromptTemplate.fromTemplate(this._template);
     if (this.chat_model) {

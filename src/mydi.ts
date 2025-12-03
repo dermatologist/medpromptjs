@@ -18,8 +18,11 @@ const mydi = (c: any, m: string, b: string) => {
   try {
     return c.resolve(m + '_' + b);
   } catch (e) {
-    return c.resolve(b);
+    try {
+      return c.resolve(b);
+    } catch (e) {}
   }
+  return null;
 };
 
 export default mydi;
