@@ -21,20 +21,6 @@ import { createStructuredChatAgent, AgentExecutor } from 'langchain/agents';
 export class BaseAgent extends BaseChain {
   private _tools: ToolInterface[] = [];
 
-  constructor(container: any) {
-    super(container);
-    // Provide a more agent-specific default template if not set
-    if (!this._template || this._template === '{input}') {
-      this._template = `
-        ## Question: {question}
-        ## Answer: {answer}
-        Given the above question and answer, generate a chain of thought explanation for the answer.
-        First, start with the model generated chain of thought explanation.
-        End the chain of though explanation with:
-        Therefore, the answer is {answer}.
-        `;
-    }
-  }
 
   get tools(): ToolInterface[] {
     return this._tools;
