@@ -44,15 +44,10 @@ export class BaseAgent {
 
   constructor(container: any) {
     this.container = container;
-    this.initialize();
     this.llm = this.resolve('main-llm');
     this.template = this.resolve('template', '{input}');
     this.chat_model = this.resolve('chat_model', false);
-    if (this.chat_model) {
-      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
-    } else {
-      this.prompt = PromptTemplate.fromTemplate(this._template);
-    }
+    this.initialize();
   }
 
   // Getters and setters
@@ -76,11 +71,7 @@ export class BaseAgent {
   }
   set template(value: string) {
     this._template = value;
-    if (this.chat_model) {
-      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
-    } else {
-      this.prompt = PromptTemplate.fromTemplate(this._template);
-    }
+    this.initialize();
   }
 
   // Getters and setters for tools
@@ -98,7 +89,6 @@ export class BaseAgent {
     if (this._description === '') {
       this._description = this.snake_case(this.constructor.name);
     }
-    this.prompt = this.prompt || PromptTemplate.fromTemplate(this._template);
     if (this.chat_model) {
       this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {
