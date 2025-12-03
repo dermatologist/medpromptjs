@@ -22,6 +22,7 @@ import {
   RunnableSequence,
 } from '@langchain/core/runnables';
 import { AIMessage } from '@langchain/core/messages';
+import { StringOutputParser } from '@langchain/core/output_parsers';
 
 export class BaseChain {
   container: any;
@@ -38,7 +39,12 @@ export class BaseChain {
     this.initialize();
     this.llm = this.resolve('main-llm');
     this.template = this.resolve('template', '{input}');
-    this.chat_model = false;
+    this.chat_model = this.resolve('chat_model', false);
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this._template);
+    }
   }
 
   // Getters and setters
@@ -62,9 +68,6 @@ export class BaseChain {
   }
   set template(value: string) {
     this._template = value;
-    try {
-      this.chat_model = this.resolve('chat_model', null);
-    } catch (e) {}
     if (this.chat_model) {
       this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {
@@ -110,10 +113,15 @@ export class BaseChain {
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
   async chain(input: any) {
+    const outputParser = new StringOutputParser();
     this.runnable = RunnableSequence.from([
-      new RunnablePassthrough(),
+      {
+        input: new RunnablePassthrough(),
+        // context: async () => loadContextFromStore(),
+      },
       this.prompt,
       this.llm,
+      outputParser,
     ]);
     if (this.chat_model) {
       const response: string = await this.runnable.invoke(input);
