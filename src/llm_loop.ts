@@ -289,13 +289,13 @@ export class LLMLoop extends BaseChain {
     const reduceChain: BaseChain = new BaseChain(this.container);
     mapQuery.name = 'MapQuery';
     mapQuery.description = 'Map the expression to a natural language query.';
-    mapQuery.template = this._mapQueryTemplate;
+    mapQuery.template = this.resolve('litl_mapquery_template', this._mapQueryTemplate);
     mapDoc.name = 'MapDoc';
     mapDoc.description = 'Map the document to a set of facts.';
-    mapDoc.template = this._mapDocTemplate;
+    mapDoc.template = this.resolve('litl_mapdoc_template', this._mapDocTemplate);
     reduceChain.name = 'ReduceChain';
     reduceChain.description = 'Reduce a set of documents to binary answer.';
-    reduceChain.template = this._reduceChainTemplate;
+    reduceChain.template = this.resolve('litl_reduce_chain_template', this._reduceChainTemplate);
     const mapQueryChain = RunnablePassthrough.assign({
       query: async (input: any) =>
         mapQuery.chain({ expression: input.input.expression }),

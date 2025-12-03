@@ -14,6 +14,46 @@ A set of base classes for making GenAI application development easy. Implements 
 npm i --save medpromptjs
 ```
 
+## Usage
+
+### BaseLLM
+
+`BaseLLM` is a base class for LLMs that communicate with a remote API. It extends the LangChain `LLM` class and provides configurable parameters for model inference.
+
+```typescript
+import { BaseLLM } from 'medpromptjs';
+
+const llm = new BaseLLM({
+  baseUrl: 'http://localhost:8080/api/chat',
+  model: 'llama2',
+  apiKey: 'your-api-key', // optional
+  temperature: 0.1,
+  maxOutputTokens: 512,
+});
+
+const response = await llm.invoke('Hello, how are you?');
+```
+
+### BaseEmbedding
+
+`BaseEmbedding` is a base class for embeddings that communicate with a remote API. It extends the LangChain `Embeddings` class.
+
+```typescript
+import { BaseEmbedding } from 'medpromptjs';
+
+const embedding = new BaseEmbedding({
+  baseUrl: 'http://localhost:8080/api/embeddings',
+  model: 'nomic-embed-text',
+  apiKey: 'your-api-key', // optional
+});
+
+// Embed multiple documents
+const embeddings = await embedding.embedDocuments(['doc1', 'doc2']);
+
+// Embed a single query
+const queryEmbedding = await embedding.embedQuery('search query');
+```
+
 ## Give us a star ⭐️
 If you find this project useful, give us a star. It helps others discover the project.
 
