@@ -28,7 +28,7 @@ const bootstrap = async () => {
   });
 
   container.register('baseChain_template', {
-    useValue: '{input}',
+    useValue: '{basechain}',
   });
 
   return container;
