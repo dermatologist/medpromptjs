@@ -23,6 +23,7 @@ import {
 } from '@langchain/core/runnables';
 import { AIMessage } from '@langchain/core/messages';
 import { StringOutputParser } from '@langchain/core/output_parsers';
+import { initializeAgentExecutor } from 'langchain/agents';
 
 export class BaseChain {
   container: any;
@@ -38,16 +39,19 @@ export class BaseChain {
     this.container = container;
     this._name = this.camelize(this.constructor.name);
     this._description = this.snake_case(this.constructor.name);
-    this.llm = this.resolve('llm');
-    this._template = this.resolve('template');
-    this.chat_model = this.resolve('chat-model', false);
+    this.llm = this.resolve('main-llm');
+    this._template = this.resolve('template', '{input}');
+    this.chat_model = this.resolve('chat_model', false);
+    this.initializePrompt();
+  }
+
+  initializePrompt() {
     if (this.chat_model) {
       this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {
       this.prompt = PromptTemplate.fromTemplate(this._template);
     }
   }
-
   // Getters and setters
   get name(): string {
     return this._name;
@@ -69,11 +73,7 @@ export class BaseChain {
   }
   set template(value: string) {
     this._template = value;
-    if (this.chat_model) {
-      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
-    } else {
-      this.prompt = PromptTemplate.fromTemplate(this._template);
-    }
+    this.initializePrompt();
   }
 
   resolve(name: string, defaultValue: any = null): any {

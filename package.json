@@ -5,16 +5,16 @@
   "license": "Apache-2.0",
   "author": "Bell Eapen",
   "main": "dist/index.js",
-  "module": "dist/medpromptjs.esm.js",
+  "module": "dist/medpromptjs.mjs",
   "typings": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/medpromptjs.esm.js",
+      "import": "./dist/medpromptjs.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./dist/medpromptjs.esm.js": {
-      "import": "./dist/medpromptjs.esm.js",
+    "./dist/medpromptjs.mjs": {
+      "import": "./dist/medpromptjs.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
@@ -25,6 +25,7 @@
   "scripts": {
     "analyze": "size-limit --why",
     "build": "dts build --target node",
+    "postbuild": "mv dist/medpromptjs.esm.js dist/medpromptjs.mjs && mv dist/medpromptjs.esm.js.map dist/medpromptjs.mjs.map && sed -i 's/medpromptjs.esm.js.map/medpromptjs.mjs.map/g' dist/medpromptjs.mjs",
     "lint": "dts lint --fix",
     "prepare": "dts build --target node",
     "size": "size-limit",
