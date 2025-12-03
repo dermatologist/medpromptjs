@@ -37,9 +37,15 @@ export class BaseChain {
   constructor(container: any) {
     this.container = container;
     this.llm = this.resolve('main-llm');
-    this.template = this.resolve('template', '{input}');
+    this._name = this.camelize(this.constructor.name);
+    this._description = this.snake_case(this.constructor.name);
+    this._template = this.resolve('template', '{input}');
     this.chat_model = this.resolve('chat_model', false);
-    this.initialize();
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this._template);
+    }
   }
 
   // Getters and setters
@@ -63,16 +69,6 @@ export class BaseChain {
   }
   set template(value: string) {
     this._template = value;
-    this.initialize();
-  }
-
-  initialize() {
-    if (this._name === '') {
-      this._name = this.camelize(this.constructor.name);
-    }
-    if (this._description === '') {
-      this._description = this.snake_case(this.constructor.name);
-    }
     if (this.chat_model) {
       this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {
@@ -80,8 +76,12 @@ export class BaseChain {
     }
   }
 
+
   resolve(name: string, defaultValue: any = null): any {
-    return mydi(this.container, this._name, name) || defaultValue;
+    return (
+      mydi(this.container, this.camelize(this.constructor.name), name) ||
+      defaultValue
+    );
   }
 
   camelize(str: string) {
