@@ -25,7 +25,8 @@ describe('BaseAgent', () => {
   it('should initialize with default values', () => {
     expect(baseAgent.name).toBe('baseAgent');
     expect(baseAgent.description).toBe('base_agent');
-    expect(baseAgent.template).toContain('input');
+    // The default template for BaseAgent is now the agent-specific template, not '{input}'
+    expect(baseAgent.template).toContain('Question: {question}');
     expect(baseAgent.chat_model).toBe(false);
   });
 

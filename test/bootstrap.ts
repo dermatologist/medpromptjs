@@ -31,6 +31,14 @@ const bootstrap = async () => {
     useValue: '{basechain}',
   });
 
+  container.register('baseAgent_template', {
+    useValue: '{baseagent}',
+  });
+
+  container.register('lLMLoop_template', {
+    useValue: '{baseloop}',
+  });
+
   return container;
 };
 

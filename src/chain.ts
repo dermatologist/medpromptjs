@@ -26,9 +26,9 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 
 export class BaseChain {
   container: any;
-  private _name: string = '';
-  private _description: string = '';
-  private _template: string = '';
+  _name: string = '';
+  _description: string = '';
+  _template: string = '';
   prompt: any;
   llm: LLM;
   chat_model: boolean;
