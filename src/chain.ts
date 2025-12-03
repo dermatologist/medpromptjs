@@ -36,11 +36,11 @@ export class BaseChain {
 
   constructor(container: any) {
     this.container = container;
-    this.llm = this.resolve('main-llm');
     this._name = this.camelize(this.constructor.name);
     this._description = this.snake_case(this.constructor.name);
-    this._template = this.resolve('template', '{input}');
-    this.chat_model = this.resolve('chat_model', false);
+    this.llm = this.resolve('llm');
+    this._template = this.resolve('template');
+    this.chat_model = this.resolve('chat-model', false);
     if (this.chat_model) {
       this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {

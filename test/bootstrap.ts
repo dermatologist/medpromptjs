@@ -20,22 +20,27 @@ const bootstrap = async () => {
     }),
   ];
 
-  container.register('main-llm', {
+  container.register('llm', {
     useValue: llm,
   });
+
+  container.register('chat-model', {
+    useValue: false,  // false has to be set as default. Only true here will be accepted here. The false here is irrelevant.
+  });
+
   container.register('tools', {
     useValue: tools,
   });
 
-  container.register('baseChain_template', {
+  container.register('baseChain-template', {
     useValue: '{basechain}',
   });
 
-  container.register('baseAgent_template', {
+  container.register('baseAgent-template', {
     useValue: '{baseagent}',
   });
 
-  container.register('lLMLoop_template', {
+  container.register('lLMLoop-template', {
     useValue: '{baseloop}',
   });
 
