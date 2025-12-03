@@ -4,7 +4,6 @@ import { FakeListChatModel } from '@langchain/core/utils/testing';
 import { DynamicTool } from '@langchain/core/tools';
 
 const bootstrap = async () => {
-
   const llm = new FakeListChatModel({
     responses: [
       'Hello, this is a fake response!',
@@ -21,15 +20,28 @@ const bootstrap = async () => {
     }),
   ];
 
-  container.register('main-llm', {
+  container.register('llm', {
     useValue: llm,
   });
+
+  container.register('chat-model', {
+    useValue: false,  // false has to be set as default. Only true here will be accepted here. The false here is irrelevant.
+  });
+
   container.register('tools', {
     useValue: tools,
   });
 
-  container.register('baseChain_prompt', {
-    useValue: '',
+  container.register('baseChain-template', {
+    useValue: '{basechain}',
+  });
+
+  container.register('baseAgent-template', {
+    useValue: '{baseagent}',
+  });
+
+  container.register('lLMLoop-template', {
+    useValue: '{baseloop}',
   });
 
   return container;

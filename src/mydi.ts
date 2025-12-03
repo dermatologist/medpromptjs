@@ -17,9 +17,14 @@
 const mydi = (c: any, m: string, b: string) => {
   try {
     return c.resolve(m + '_' + b);
-  } catch (e) {
+  } catch (e) { }
+  try {
+    return c.resolve(m + '-' + b);
+  } catch (e) {}
+  try {
     return c.resolve(b);
-  }
+  } catch (e) {}
+  return null;
 };
 
 export default mydi;

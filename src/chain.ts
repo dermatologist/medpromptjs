@@ -22,6 +22,7 @@ import {
   RunnableSequence,
 } from '@langchain/core/runnables';
 import { AIMessage } from '@langchain/core/messages';
+import { StringOutputParser } from '@langchain/core/output_parsers';
 
 export class BaseChain {
   container: any;
@@ -35,9 +36,16 @@ export class BaseChain {
 
   constructor(container: any) {
     this.container = container;
-    this.llm = this.resolve('main-llm');
-    this.chat_model = false;
-    this.initialize();
+    this._name = this.camelize(this.constructor.name);
+    this._description = this.snake_case(this.constructor.name);
+    this.llm = this.resolve('llm');
+    this._template = this.resolve('template');
+    this.chat_model = this.resolve('chat-model', false);
+    if (this.chat_model) {
+      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
+    } else {
+      this.prompt = PromptTemplate.fromTemplate(this._template);
+    }
   }
 
   // Getters and setters
@@ -61,9 +69,6 @@ export class BaseChain {
   }
   set template(value: string) {
     this._template = value;
-    try {
-      this.chat_model = this.resolve('chat_model');
-    } catch (e) {}
     if (this.chat_model) {
       this.prompt = ChatPromptTemplate.fromTemplate(this._template);
     } else {
@@ -71,26 +76,11 @@ export class BaseChain {
     }
   }
 
-  initialize() {
-    if (this._name === '') {
-      this._name = this.camelize(this.constructor.name);
-    }
-    if (this._description === '') {
-      this._description = this.snake_case(this.constructor.name);
-    }
-    if (this._template === '') {
-      this._template = `{{input}}`;
-    }
-    this.prompt = this.prompt || PromptTemplate.fromTemplate(this._template);
-    if (this.chat_model) {
-      this.prompt = ChatPromptTemplate.fromTemplate(this._template);
-    } else {
-      this.prompt = PromptTemplate.fromTemplate(this._template);
-    }
-  }
-
-  resolve(name: string) {
-    return mydi(this.container, this._name, name);
+  resolve(name: string, defaultValue: any = null): any {
+    return (
+      mydi(this.container, this.camelize(this.constructor.name), name) ||
+      defaultValue
+    );
   }
 
   camelize(str: string) {
@@ -112,10 +102,15 @@ export class BaseChain {
   // https://js.langchain.com/v0.1/docs/expression_language/how_to/routing/
   //! Override this method
   async chain(input: any) {
+    const outputParser = new StringOutputParser();
     this.runnable = RunnableSequence.from([
-      new RunnablePassthrough(),
+      {
+        input: new RunnablePassthrough(),
+        // context: async () => loadContextFromStore(),
+      },
       this.prompt,
       this.llm,
+      outputParser,
     ]);
     if (this.chat_model) {
       const response: string = await this.runnable.invoke(input);
@@ -123,5 +118,9 @@ export class BaseChain {
       return aiMessage.content;
     }
     return await this.runnable.invoke(input);
+  }
+
+  async invoke(input: any) {
+    return this.chain(input);
   }
 }

@@ -12,7 +12,7 @@ describe('BaseChain', () => {
   it('should initialize with default values', () => {
     expect(baseChain.name).toBe('baseChain');
     expect(baseChain.description).toBe('base_chain');
-    expect(baseChain.template).toBe('{{input}}');
+    expect(baseChain.template).toBe('{basechain}');
     expect(baseChain.chat_model).toBe(false);
   });
 
