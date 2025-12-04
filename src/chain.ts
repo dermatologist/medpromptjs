@@ -23,7 +23,7 @@ import {
 } from '@langchain/core/runnables';
 import { AIMessage } from '@langchain/core/messages';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { initializeAgentExecutor } from 'langchain/agents';
+import { FakeListChatModel } from '@langchain/core/utils/testing';
 
 export class BaseChain {
   container: any;
@@ -34,14 +34,21 @@ export class BaseChain {
   llm: LLM;
   chat_model: boolean;
   runnable: any;
+  fakeLLM: FakeListChatModel =  new FakeListChatModel({
+    responses: [
+      'Hello, this is a fake response (There is no real LLM available)!',
+      'bootstrap main-llm with a real LLM instance',
+      'This is another fake response (There is no real LLM available)!',
+    ],
+  });
 
   constructor(container: any) {
     this.container = container;
     this._name = this.camelize(this.constructor.name);
     this._description = this.snake_case(this.constructor.name);
-    this.llm = this.resolve('main-llm');
+    this.llm = this.resolve('main-llm', this.fakeLLM);
     this._template = this.resolve('template', '{input}');
-    this.chat_model = this.resolve('chat_model', false);
+    this.chat_model = this.resolve('chat-model', false);
     this.initializePrompt();
   }
 
