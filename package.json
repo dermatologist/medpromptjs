@@ -9,14 +9,10 @@
   "typings": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/medpromptjs.mjs",
       "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./dist/medpromptjs.mjs": {
-      "import": "./dist/medpromptjs.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.js"
     }
   },
   "files": [
