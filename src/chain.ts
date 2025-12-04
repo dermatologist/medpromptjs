@@ -46,7 +46,7 @@ export class BaseChain {
     this.container = container;
     this._name = this.camelize(this.constructor.name);
     this._description = this.snake_case(this.constructor.name);
-    this.llm = this.resolve('main-llm', this.fakeLLM);
+    this.llm = this.resolve('llm', this.fakeLLM);
     this._template = this.resolve('template', '{input}');
     this.chat_model = this.resolve('chat-model', false);
     this.initializePrompt();
