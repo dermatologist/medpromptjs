@@ -1,20 +1,20 @@
 {
   "name": "medpromptjs",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A library of langchain base classes for building medical applications.",
   "license": "Apache-2.0",
   "author": "Bell Eapen",
   "main": "dist/index.js",
-  "module": "dist/medpromptjs.esm.js",
+  "module": "dist/medpromptjs.mjs",
   "typings": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/medpromptjs.esm.js",
+      "import": "./dist/medpromptjs.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./dist/medpromptjs.esm.js": {
-      "import": "./dist/medpromptjs.esm.js",
+    "./dist/medpromptjs.mjs": {
+      "import": "./dist/medpromptjs.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
@@ -25,6 +25,7 @@
   "scripts": {
     "analyze": "size-limit --why",
     "build": "dts build --target node",
+    "postbuild": "mv dist/medpromptjs.esm.js dist/medpromptjs.mjs && mv dist/medpromptjs.esm.js.map dist/medpromptjs.mjs.map && sed -i 's/medpromptjs.esm.js.map/medpromptjs.mjs.map/g' dist/medpromptjs.mjs",
     "lint": "dts lint --fix",
     "prepare": "dts build --target node",
     "size": "size-limit",
@@ -69,7 +70,7 @@
     "dts-cli": "^2.0.5",
     "google-auth-library": "^10.1.0",
     "husky": "^9.1.7",
-    "size-limit": "^11.2.0",
+    "size-limit": "^12.0.0",
     "supertest": "^7.1.1",
     "ts-mockito": "^2.6.1",
     "tslib": "^2.6.2",
