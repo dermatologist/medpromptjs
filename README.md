@@ -1,6 +1,6 @@
 # medpromptjs
 
-A set of base classes for making GenAI application development easy. Implements the [LLM-in-the-Loop CQL execution on unstructured data](https://nuchange.ca/2025/06/v-llm-in-the-loop-cql-execution-with-unstructured-data-and-fhir-terminology-support.html).
+A set of base classes for making GenAI application development easy. Implements the [LLM-in-the-Loop CQL execution on unstructured data](https://nuchange.ca/2025/06/v-llm-in-the-loop-cql-execution-with-unstructured-data-and-fhir-terminology-support.html). The implementation used by the [end-to-end application](https://github.com/dermatologist/cql-express-r4) is [in this file](src/llm_loop.ts).
 
 [![npm version](https://badge.fury.io/js/medpromptjs.svg)](https://www.npmjs.com/package/medpromptjs)
 [![npm](https://img.shields.io/npm/dt/medpromptjs)](https://www.npmjs.com/package/medpromptjs)
@@ -14,9 +14,11 @@ A set of base classes for making GenAI application development easy. Implements 
 npm i --save medpromptjs
 ```
 
-## Usage
+## Base classes
 
-### BaseLLM
+### [BaseChain](src/chain) and [BaseAgent](src/agent) use dependency injection with the help of [tsyringe](https://github.com/microsoft/tsyringe). Other useful classes are:
+
+#### BaseLLM
 
 `BaseLLM` is a base class for LLMs that communicate with a remote API. It extends the LangChain `LLM` class and provides configurable parameters for model inference.
 
@@ -34,7 +36,7 @@ const llm = new BaseLLM({
 const response = await llm.invoke('Hello, how are you?');
 ```
 
-### BaseEmbedding
+#### BaseEmbedding
 
 `BaseEmbedding` is a base class for embeddings that communicate with a remote API. It extends the LangChain `Embeddings` class.
 
@@ -60,8 +62,8 @@ If you find this project useful, give us a star. It helps others discover the pr
 ## Related projects
 
 * [FHIRy - FHIR to pandas dataframe](https://github.com/dermatologist/fhiry)
+* [DHTI: a reference architecture for Gen AI in healthcare.](https://github.com/dermatologist/dhti)
 * [kedro-multimodal - Template for multi-modal machine learning in healthcare using Kedro](https://github.com/dermatologist/kedro-multimodal)
-* [ckblib - A library for clinical knowledge graphs](https://github.com/dermatologist/ckblib)
 
 ## Contributing
 * PR welcome
