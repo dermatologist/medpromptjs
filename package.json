@@ -78,7 +78,7 @@
     "cors": "^2.8",
     "dotenv": "^16",
     "express": "^5.1",
-    "langchain": "^0.3",
+    "langchain": "^1.1",
     "reflect-metadata": "^0.2",
     "tslog": "^4.9",
     "tsyringe": "^4.10"
