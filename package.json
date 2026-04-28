@@ -41,7 +41,10 @@
     "trailingComma": "es5"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@langchain)/)"
+    ]
   },
   "engines": {
     "node": ">=18"
@@ -63,7 +66,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.2",
     "@types/supertest": "^6.0.2",
-    "dts-cli": "^2.0.5",
+    "dts-cli": "^1.6.3",
     "google-auth-library": "^10.1.0",
     "husky": "^9.1.7",
     "size-limit": "^12.0.0",
