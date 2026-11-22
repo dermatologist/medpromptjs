@@ -16,7 +16,10 @@
 
 import { BaseChain } from './chain';
 import type { ToolInterface } from '@langchain/core/tools';
-import { createAgent } from 'langchain';
+import {
+  AgentExecutor,
+  createStructuredChatAgent,
+} from '@langchain/classic/agents';
 
 export class BaseAgent extends BaseChain {
   private _tools: ToolInterface[] = [];
@@ -30,13 +33,20 @@ export class BaseAgent extends BaseChain {
 
   /**
    * Run the agent using the provided input.
-   * This uses createAgent from langchain (LangChain 1.x).
+   * This uses the classic agent API retained by LangChain 1.x.
    */
   async run(input: any) {
-    const agent = await createAgent({
+    const agent = await createStructuredChatAgent({
       llm: this.llm,
       tools: this._tools,
+      prompt: this.prompt,
     });
-    return await agent.invoke({ input });
+    const agentExecutor = new AgentExecutor({
+      agent,
+      tools: this.tools,
+      handleParsingErrors:
+        'Please try again, paying close attention to the final answer',
+    });
+    return await agentExecutor.invoke(input);
   }
 }

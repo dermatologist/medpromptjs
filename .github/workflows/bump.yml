@@ -16,6 +16,10 @@ jobs:
         uses: "actions/checkout@v6"
         with:
           ref: ${{ github.ref }}
+      - name: "Use Node 24"
+        uses: actions/setup-node@v6.2.0
+        with:
+          node-version: 24.x
       - name: "✏️ Generate release changelog"
         uses: janheinrichmerker/action-github-changelog-generator@v2.4
         with:
@@ -27,15 +31,16 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          add: '*.md'
-      - name:  'Automated Version Bump'
-        uses:  'dermatologist/gh-action-bump-version@develop'
+          add: "*.md"
+      - name: "Automated Version Bump"
+        uses: "dermatologist/gh-action-bump-version@develop"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          minor-wording:  'add,Adds,new,feat,feature,Feature,update,Update,improve,Improve,fix,Fix,fixes'
-          major-wording:  'MAJOR,cut-major,major,breaking'
-          patch-wording:  'patch,chore,refactor,docs'     # Providing patch-wording will override commits
-                                            # defaulting to a patch bump.
-          rc-wording:     'RELEASE,alpha'
-          skip-tag:       'true' # Tag creation is handled in another workflow
+          minor-wording: "add,Adds,new,feat,feature,Feature,update,Update,improve,Improve,fix,Fix,fixes"
+          major-wording: "MAJOR,cut-major,major,breaking"
+          patch-wording:
+            "patch,chore,refactor,docs" # Providing patch-wording will override commits
+            # defaulting to a patch bump.
+          rc-wording: "RELEASE,alpha"
+          skip-tag: "true" # Tag creation is handled in another workflow
