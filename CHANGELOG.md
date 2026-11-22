@@ -2,11 +2,7 @@
 
 ## [Unreleased](https://github.com/dermatologist/medpromptjs/tree/HEAD)
 
-[Full Changelog](https://github.com/dermatologist/medpromptjs/compare/0.5.5...HEAD)
-
-**Implemented enhancements:**
-
-- Feature request: Add react components for a conversational interface in ahealthcare application [\#78](https://github.com/dermatologist/medpromptjs/issues/78)
+[Full Changelog](https://github.com/dermatologist/medpromptjs/compare/0.6.0...HEAD)
 
 **Merged pull requests:**
 
@@ -28,6 +24,14 @@
 - chore: update Node.js version to 20 in workflows and adjust dependenc… [\#62](https://github.com/dermatologist/medpromptjs/pull/62) ([dermatologist](https://github.com/dermatologist))
 - chore\(deps\): bump @langchain/community from 0.3.45 to 0.3.47 [\#52](https://github.com/dermatologist/medpromptjs/pull/52) ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps-dev\): bump google-auth-library from 9.15.1 to 10.1.0 [\#51](https://github.com/dermatologist/medpromptjs/pull/51) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [0.6.0](https://github.com/dermatologist/medpromptjs/tree/0.6.0) (2026-11-22)
+
+[Full Changelog](https://github.com/dermatologist/medpromptjs/compare/0.5.5...0.6.0)
+
+**Implemented enhancements:**
+
+- Feature request: Add react components for a conversational interface in ahealthcare application [\#78](https://github.com/dermatologist/medpromptjs/issues/78)
 
 ## [0.5.5](https://github.com/dermatologist/medpromptjs/tree/0.5.5) (2025-12-04)
 
