@@ -27,9 +27,9 @@ import { FakeListChatModel } from '@langchain/core/utils/testing';
 
 export class BaseChain {
   container: any;
-  private _name: string = '';
-  private _description: string = '';
-  private _template: string = '';
+  private _name = '';
+  private _description = '';
+  private _template = '';
   prompt: any;
   llm: LLM;
   chat_model: boolean;

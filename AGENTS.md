@@ -2,7 +2,7 @@
 
 - This typescript repository contains various langchain chains, agents and tools designed to assist with medical prompts and tasks.
 - Additionally, it includes UI components for building interfaces around these agents.
-- For scaffolding, this repository uses dts-cli from https://github.com/weiran-zsd/dts-cli
+- This repository uses standard TypeScript tooling (tsc, jest, eslint).
 - Please read README.md, package.json, and tsconfig.json for more details on setup and usage.
 - Dependency injections are managed using tsyringe. Please see src/mydi.ts for details.
 - DO NOT use any content from the notes folder.
@@ -27,4 +27,5 @@ medpromptjs/
 ```
 
 Key files you should familiarize yourself with:
+
 - README.md - Main documentation

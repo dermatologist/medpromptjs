@@ -1,9 +1,9 @@
 import { BaseAgent } from '../src';
 import bootstrap from './bootstrap';
 
-jest.mock('langchain/agents', () => ({
-  createStructuredChatAgent: jest.fn(),
-  AgentExecutor: jest.fn().mockImplementation(() => ({
+jest.mock('@langchain/classic/agents', () => ({
+  createStructuredChatAgent: jest.fn(() => ({})),
+  AgentExecutor: jest.fn(() => ({
     invoke: jest.fn().mockResolvedValue('mocked result'),
   })),
 }));
@@ -30,5 +30,31 @@ describe('BaseAgent', () => {
 
   it('should resolve dependencies', () => {
     expect(baseAgent.llm).toBeDefined();
+  });
+
+  describe('tools getter and setter', () => {
+    it('should get empty tools array by default', () => {
+      expect(baseAgent.tools).toEqual([]);
+    });
+
+    it('should set and get tools', () => {
+      const mockTools = [{ name: 'tool1' }, { name: 'tool2' }];
+      baseAgent.tools = mockTools;
+      expect(baseAgent.tools).toEqual(mockTools);
+    });
+  });
+
+  describe('run method', () => {
+    it('should run agent with input', async () => {
+      const mockInput = { input: 'test input' };
+      const result = await baseAgent.run(mockInput);
+      expect(result).toBe('mocked result');
+    });
+
+    it('should handle different input types', async () => {
+      const mockInput = { input: 'another test' };
+      const result = await baseAgent.run(mockInput);
+      expect(result).toBe('mocked result');
+    });
   });
 });

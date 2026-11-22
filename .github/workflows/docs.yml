@@ -5,7 +5,6 @@ on:
   release:
     types: [published]
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +13,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6.2.0
         with:
-          node-version: 20
+          node-version: 24
       - name: Install Dependencies
         run: npm install --include=dev
       - name: Build Docs 📚

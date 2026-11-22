@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { DynamicStructuredTool } from 'langchain/tools';
+import { DynamicStructuredTool } from '@langchain/core/tools';
 import mydi from './mydi';
 
 export class BaseTool extends DynamicStructuredTool {
