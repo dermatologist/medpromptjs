@@ -2,6 +2,29 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { FakeListChatModel } from '@langchain/core/utils/testing';
 import { DynamicTool } from '@langchain/core/tools';
+import { Logger } from 'tslog';
+
+// Mock tslog to prevent import.meta.url issues
+jest.mock('tslog', () => ({
+  Logger: jest.fn().mockImplementation(() => ({
+    info: jest.fn(),
+    debug: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    success: jest.fn(),
+    fatal: jest.fn(),
+    trace: jest.fn(),
+    child: jest.fn().mockReturnValue({
+      info: jest.fn(),
+      debug: jest.fn(),
+      error: jest.fn(),
+      warn: jest.fn(),
+      success: jest.fn(),
+      fatal: jest.fn(),
+      trace: jest.fn(),
+    }),
+  })),
+}));
 
 const bootstrap = async () => {
   const llm = new FakeListChatModel({
@@ -25,7 +48,7 @@ const bootstrap = async () => {
   });
 
   container.register('chat-model', {
-    useValue: false,  // false has to be set as default. Only true here will be accepted here. The false here is irrelevant.
+    useValue: false, // false has to be set as default. Only true here will be accepted here. The false here is irrelevant.
   });
 
   container.register('tools', {
