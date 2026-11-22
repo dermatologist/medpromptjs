@@ -1,37 +1,25 @@
 {
   "name": "medpromptjs",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "description": "A library of langchain base classes for building medical applications.",
   "license": "Apache-2.0",
   "author": "Bell Eapen",
   "main": "dist/index.js",
-  "module": "dist/medpromptjs.mjs",
   "typings": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/medpromptjs.esm.js",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "analyze": "size-limit --why",
-    "build": "dts build --target node",
-    "lint": "dts lint --fix",
-    "prepare": "dts build --target node",
-    "size": "size-limit",
-    "start": "dts watch --target node",
-    "test": "dts test --coverage --verbose --testPathIgnorePatterns=./test/e2e/*",
-    "e2e": "dts test --verbose ./test/e2e --detectOpenHandles",
-    "docs": "typedoc --exclude src/tool.ts --html docs src"
+    "build": "tsc",
+    "lint": "eslint src --fix",
+    "prepare": "npm run build",
+    "test": "jest --coverage --verbose --testPathIgnorePatterns=./test/e2e/*",
+    "e2e": "jest --verbose ./test/e2e --detectOpenHandles",
+    "docs": "typedoc --exclude src/tool.ts --out docs src"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "dts lint"
+      "pre-commit": "npm run lint"
     }
   },
   "prettier": {
@@ -40,47 +28,43 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
-  "size-limit": [
-    {
-      "path": "dist/medpromptjs.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/medpromptjs.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^11.0.1",
-    "@tsconfig/recommended": "^1.0.3",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.2",
-    "@types/supertest": "^6.0.2",
-    "dts-cli": "^2.0.5",
-    "google-auth-library": "^10.1.0",
+    "@babel/core": "^7.29.13",
+    "@babel/preset-env": "^7.29.14",
+    "@babel/preset-typescript": "^7.29.7",
+    "@tsconfig/recommended": "^1.0.14",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/supertest": "^7.2.1",
+    "babel-jest": "^30.5.2",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "google-auth-library": "^11.3.4",
     "husky": "^9.1.7",
-    "size-limit": "^12.0.0",
-    "supertest": "^7.1.1",
+    "jest": "^29.7.0",
+    "supertest": "^7.3.2",
+    "ts-jest": "^29.2.6",
     "ts-mockito": "^2.6.1",
-    "tslib": "^2.6.2",
-    "typedoc": "^0.28.5",
-    "typescript": "^5.3.3"
+    "tslib": "^2.9.1",
+    "typedoc": "^0.28.20",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.73.0"
   },
   "dependencies": {
-    "@langchain/community": "^0.3",
-    "@langchain/core": "^0.3",
-    "cors": "^2.8",
-    "dotenv": "^16",
-    "express": "^5.1",
-    "langchain": "^0.3",
-    "reflect-metadata": "^0.2",
-    "tslog": "^4.9",
-    "tsyringe": "^4.10"
+    "@langchain/classic": "^1.0.62",
+    "@langchain/community": "^1.1.29",
+    "@langchain/core": "^1.5.0",
+    "@langchain/textsplitters": "^1.0.2",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^5.3.0",
+    "langchain": "^1.6.7",
+    "reflect-metadata": "^0.2.2",
+    "tslog": "^5.5.0",
+    "tsyringe": "^4.10.0"
   }
 }

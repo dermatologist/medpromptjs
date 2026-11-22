@@ -2,11 +2,11 @@ import { BaseChain } from './chain';
 import { CharacterTextSplitter } from '@langchain/textsplitters';
 import { Logger, ILogObj } from 'tslog';
 
-const log: Logger<ILogObj> = new Logger();
+const log = new Logger<ILogObj>();
 export class LLMLoop extends BaseChain {
   // Implement the LLM loop logic here
-  stringExpression: string = '';
-  _mapQueryTemplate: string = `
+  stringExpression = '';
+  _mapQueryTemplate = `
     You are an assistant that can convert statements to a natural language query as in the example below.\n
 
 
@@ -15,7 +15,7 @@ export class LLMLoop extends BaseChain {
     Statements: {expression}
     query: `;
 
-  _mapDocTemplate: string = `
+  _mapDocTemplate = `
     You will be given a document and few statements.\n
     Extract facts from the document that are relevant to the statements.\n
     Do not include any irrelevant information or context.\n
@@ -29,7 +29,7 @@ export class LLMLoop extends BaseChain {
     statements: {statements}\n
     facts: `;
 
-  _reduceChainTemplate: string = `
+  _reduceChainTemplate = `
     Say yes if the facts mentions all aspects of the query, else say no.\n
 
     Example:
@@ -70,7 +70,7 @@ export class LLMLoop extends BaseChain {
   }
 
   async checkAssertion(expression: string, context: any): Promise<boolean> {
-    let _expression: string = '';
+    let _expression = '';
     try {
       // Check if expression is a valid JSON string
       _expression = this.printValues(JSON.parse(expression));
@@ -81,7 +81,7 @@ export class LLMLoop extends BaseChain {
     log.info(`Checking assertion with expression: ${_expression}`);
     // Initialize context and content
     let _context: any = undefined;
-    let _content: string = '';
+    let _content = '';
     try {
       _context = JSON.parse(context);
     } catch (error) {
@@ -131,11 +131,11 @@ export class LLMLoop extends BaseChain {
     // Regular expression to match dates in format of 'mm/dd/yyyy' or 'mm-dd-yyyy'
     const dateRegex = /(\d{1,2}[-/]\d{1,2}[-/]\d{4})/g;
     let matches;
-    let currentDate = new Date();
+    const currentDate = new Date();
 
     while ((matches = dateRegex.exec(text)) !== null) {
-      let date = new Date(matches[0]);
-      let timeElapsed =
+      const date = new Date(matches[0]);
+      const timeElapsed =
         (currentDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
       text = text.replace(
         matches[0],
@@ -176,8 +176,8 @@ export class LLMLoop extends BaseChain {
 
   async textSplitter(
     text: string,
-    chunkSize: number = 3900,
-    chunkOverlap: number = 0
+    chunkSize = 3900,
+    chunkOverlap = 0
   ): Promise<string[]> {
     const textSplitter = new CharacterTextSplitter({
       chunkSize: chunkSize,
@@ -241,7 +241,7 @@ export class LLMLoop extends BaseChain {
   }
 
   _printValues(obj: any) {
-    for (var key in obj) {
+    for (const key in obj) {
       if (typeof obj[key] === 'object') {
         this._printValues(obj[key]);
       } else {
