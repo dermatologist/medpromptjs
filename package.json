@@ -44,7 +44,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "size-limit": [
     {
@@ -57,28 +57,31 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^11.0.1",
-    "@tsconfig/recommended": "^1.0.3",
+    "@babel/core": "^7.29.13",
+    "@babel/plugin-syntax-typescript": "^7.29.7",
+    "@babel/preset-env": "^7.29.14",
+    "@size-limit/preset-small-lib": "^11.1.2",
+    "@tsconfig/recommended": "^1.0.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.2",
     "@types/supertest": "^6.0.2",
     "dts-cli": "^2.0.5",
-    "google-auth-library": "^10.1.0",
+    "google-auth-library": "^9.7.0",
     "husky": "^9.1.7",
-    "size-limit": "^12.0.0",
-    "supertest": "^7.1.1",
+    "size-limit": "^11.1.2",
+    "supertest": "^7.1.0",
     "ts-mockito": "^2.6.1",
-    "tslib": "^2.6.2",
-    "typedoc": "^0.28.5",
-    "typescript": "^5.3.3"
+    "tslib": "^2.8.0",
+    "typedoc": "^0.27.6",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@langchain/community": "^0.3",
-    "@langchain/core": "^0.3",
+    "@langchain/community": "^1.0.0",
+    "@langchain/core": "^1.0.0",
     "cors": "^2.8",
     "dotenv": "^16",
     "express": "^5.1",
-    "langchain": "^0.3",
+    "langchain": "^1.0.0",
     "reflect-metadata": "^0.2",
     "tslog": "^4.9",
     "tsyringe": "^4.10"

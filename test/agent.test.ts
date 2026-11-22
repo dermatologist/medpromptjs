@@ -1,12 +1,15 @@
 import { BaseAgent } from '../src';
 import bootstrap from './bootstrap';
 
-jest.mock('langchain/agents', () => ({
-  createStructuredChatAgent: jest.fn(),
-  AgentExecutor: jest.fn().mockImplementation(() => ({
-    invoke: jest.fn().mockResolvedValue('mocked result'),
-  })),
-}));
+jest.mock('langchain', () => {
+  const actual = jest.requireActual('langchain');
+  return {
+    ...actual,
+    createAgent: jest.fn().mockImplementation(() => ({
+      invoke: jest.fn().mockResolvedValue('mocked result'),
+    })),
+  };
+});
 
 describe('BaseAgent', () => {
   let baseAgent: BaseAgent;
