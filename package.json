@@ -1,6 +1,6 @@
 {
   "name": "medpromptjs",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A library of langchain base classes for building medical applications.",
   "repository": {
     "type": "git",
